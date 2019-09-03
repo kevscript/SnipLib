@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
-import { closeListModal } from '../actions'
+import { closeListModal, changeListModalName, addNewList, resetListModalName } from '../actions'
 
 const Container = styled.div`
   position: absolute;
@@ -20,21 +20,46 @@ const Modal = styled.div`
   background: #f4f4f4;
 `
 
-const ListModal = ({ closeListModal }) => {
+const ListModal = ({ lists, closeListModal, changeListModalName, addNewList, resetListModalName }) => {
+  const { nameInput } = lists
+
+  const handleCreation = () => {
+    addNewList()
+    resetListModalName()
+    closeListModal()
+  }
+
+  const handleCancelation = () => {
+    resetListModalName()
+    closeListModal()
+  }
+
   return (
     <Container>
       <Modal>
         <label htmlFor="list-name">List Name: </label>
-        <input type="text" name="list-name" />
-        <button onClick={() => console.log('list created')}>Create</button>
-        <button onClick={closeListModal}>Cancel</button>
+        <input 
+          onChange={(e) => changeListModalName(e.target.value)} 
+          value={nameInput}
+          type="text" 
+          name="list-name" 
+        />
+        <button onClick={handleCreation}>Create</button>
+        <button onClick={handleCancelation}>Cancel</button>
       </Modal>
     </Container>
   )
 }
 
+const mapStateToProps = state => ({
+  lists: state.lists
+})
+
 const mapDispatchToProps = {
-  closeListModal
+  closeListModal,
+  changeListModalName,
+  addNewList,
+  resetListModalName
 }
 
-export default connect(null, mapDispatchToProps)(ListModal)
+export default connect(mapStateToProps, mapDispatchToProps)(ListModal)

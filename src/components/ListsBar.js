@@ -40,19 +40,39 @@ const Button = styled.button`
   }
 `
 
-const ListBar = ({ openListModal }) => {
+const ListsContainer = styled.div``
+
+const Lists = styled.ul``
+
+const Item = styled.li``
+
+const ListBar = ({ lists, openListModal }) => {
+  const { allLists } = lists
+
   return (
     <Container>
       <Header>
       <Title>My Lists</Title>
       <Button onClick={openListModal}>+</Button>
       </Header>
+      <ListsContainer>
+        <Lists>
+          {allLists.length > 0 && allLists.map(el => {
+            return <Item key={el.createdAt} id={el.createdAt}>{el.name}</Item>
+          })}
+        </Lists>
+      </ListsContainer>
     </Container>
   )
 }
+
+const mapStateToProps = state => ({
+  lists: state.lists
+})
+
 
 const mapDispatchToProps = {
   openListModal
 }
 
-export default connect(null, mapDispatchToProps)(ListBar)
+export default connect(mapStateToProps, mapDispatchToProps)(ListBar)

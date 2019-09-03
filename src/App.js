@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 
 import GlobalStyle from './styles/global'
-import ListsBar from './containers/ListsBar'
+import ListsBar from './components/ListsBar'
 import ListModal from './components/ListModal'
 
 const App = ({ lists }) => {
