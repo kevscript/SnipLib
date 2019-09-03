@@ -1,15 +1,25 @@
 import React from 'react'
+import { connect } from 'react-redux'
 
 import GlobalStyle from './styles/global'
 import ListsBar from './containers/ListsBar'
+import ListModal from './components/ListModal'
 
-const App = () => {
+const App = ({ lists }) => {
+  const { modalOpen } = lists
+  
   return (
     <div>
       <GlobalStyle />
       <ListsBar />
+
+      {modalOpen && <ListModal />}
     </div>
   );
 }
 
-export default App
+const mapStateToProps = state => ({
+  lists: state.lists
+})
+
+export default connect(mapStateToProps, null)(App)

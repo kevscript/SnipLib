@@ -1,5 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
+import { connect } from 'react-redux'
+import { openListModal } from '../actions'
 
 const Container = styled.div`
   min-height: 100vh;
@@ -19,6 +21,7 @@ const Header = styled.div`
 
 const Title = styled.h3`
   font-size: 16px;
+  font-weight: 500;
 `
 
 const Button = styled.button`
@@ -37,19 +40,19 @@ const Button = styled.button`
   }
 `
 
-
-const ListBar = () => {
+const ListBar = ({ openListModal }) => {
   return (
     <Container>
       <Header>
       <Title>My Lists</Title>
-      <Button>+</Button>
+      <Button onClick={openListModal}>+</Button>
       </Header>
     </Container>
   )
 }
 
-export default ListBar
+const mapDispatchToProps = {
+  openListModal
+}
 
-
-// button on click opens a modal or an input
+export default connect(null, mapDispatchToProps)(ListBar)

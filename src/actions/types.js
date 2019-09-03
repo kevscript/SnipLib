@@ -1,0 +1,2 @@
+export const OPEN_LIST_MODAL = 'OPEN_LIST_MODAL'
+export const CLOSE_LIST_MODAL = 'CLOSE_LIST_MODAL'
