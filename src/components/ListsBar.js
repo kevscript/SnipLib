@@ -1,14 +1,14 @@
 import React from 'react'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
-import { openListModal } from '../actions'
+import { openListModal, setSelectedList } from '../actions'
 
 const Container = styled.div`
   min-height: 100vh;
   height: 100%;
   background: darkblue;
   width: 300px;
-  padding: 25px;
+  padding: 25px 0 25px 25px;
   color: #f4f4f4;
 `
 
@@ -17,6 +17,7 @@ const Header = styled.div`
   width: 250px;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 25px;
 `
 
 const Title = styled.h3`
@@ -27,7 +28,7 @@ const Title = styled.h3`
 const Button = styled.button`
   background: transparent;
   outline: none;
-  border: 2px solid whitesmoke;
+  border: 2px solid #e3e3e3;
   border-radius: 50%;
   height: 20px;
   width: 20px;
@@ -42,23 +43,35 @@ const Button = styled.button`
 
 const ListsContainer = styled.div``
 
-const Lists = styled.ul``
+const Lists = styled.ul`
+`
 
-const Item = styled.li``
+const Item = styled.li`
+  cursor: pointer;
+  background: ${props => props.selected ? 'red' : 'transparent'};
+  border-radius: 3px 0 0 3px;
+  padding: 8px 0px 8px 25px;
+  margin: 2px 0;
 
-const ListBar = ({ lists, openListModal }) => {
+`
+
+const ListBar = ({ lists, openListModal, setSelectedList }) => {
   const { allLists } = lists
 
   return (
     <Container>
       <Header>
-      <Title>My Lists</Title>
-      <Button onClick={openListModal}>+</Button>
+        <Title>My Lists</Title>
+        <Button onClick={openListModal}>+</Button>
       </Header>
       <ListsContainer>
         <Lists>
           {allLists.length > 0 && allLists.map(el => {
-            return <Item key={el.createdAt} id={el.createdAt}>{el.name}</Item>
+            return (
+              <Item key={el.createdAt} selected={el.selected} id={el.createdAt} onClick={() => setSelectedList(el.createdAt)}>
+                {el.name}
+              </Item>
+            )
           })}
         </Lists>
       </ListsContainer>
@@ -72,7 +85,8 @@ const mapStateToProps = state => ({
 
 
 const mapDispatchToProps = {
-  openListModal
+  openListModal,
+  setSelectedList
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ListBar)

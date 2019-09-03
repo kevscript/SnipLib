@@ -34,12 +34,22 @@ const ListModal = ({ lists, closeListModal, changeListModalName, addNewList, res
     closeListModal()
   }
 
+  const handleKeyUp = (e) => {
+    if (e.keyCode === 13) {
+      handleCreation()
+    } else if (e.keyCode === 27) {
+      handleCancelation()
+    }
+  }
+
   return (
     <Container>
       <Modal>
         <label htmlFor="list-name">List Name: </label>
         <input 
+          autoFocus={true}
           onChange={(e) => changeListModalName(e.target.value)} 
+          onKeyUp={handleKeyUp}
           value={nameInput}
           type="text" 
           name="list-name" 

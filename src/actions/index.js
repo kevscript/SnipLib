@@ -3,7 +3,8 @@ import {
   CLOSE_LIST_MODAL,
   CHANGE_LIST_MODAL_NAME,
   RESET_LIST_MODAL_NAME,
-  ADD_NEW_LIST
+  ADD_NEW_LIST,
+  SET_SELECTED_LIST
 } from './types'
 
 export const openListModal = () => ({
@@ -25,4 +26,9 @@ export const resetListModalName = () => ({
 
 export const addNewList = () => ({
   type: ADD_NEW_LIST
+})
+
+export const setSelectedList = (id) => ({
+  type: SET_SELECTED_LIST,
+  payload: id
 })
