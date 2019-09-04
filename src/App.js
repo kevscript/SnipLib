@@ -1,20 +1,29 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import styled from 'styled-components'
 
 import GlobalStyle from './styles/global'
 import ListsBar from './components/ListsBar'
 import ListModal from './components/ListModal'
+import SnipsBar from './components/SnipsBar'
+
+const Container = styled.div`
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+`
 
 const App = ({ lists }) => {
   const { modalOpen } = lists
   
   return (
-    <div>
+    <Container>
       <GlobalStyle />
       <ListsBar />
+      <SnipsBar />
 
       {modalOpen && <ListModal />}
-    </div>
+    </Container>
   );
 }
 
