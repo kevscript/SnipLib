@@ -17,7 +17,7 @@ const Header = styled.div`
   width: 250px;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 25px;
+  margin-bottom: 26px;
 `
 
 const Title = styled.h3`
@@ -50,7 +50,7 @@ const Item = styled.li`
   cursor: pointer;
   background: ${props => props.selected ? 'red' : 'transparent'};
   border-radius: 3px 0 0 3px;
-  padding: 8px 0px 8px 25px;
+  padding: 6px 0px 6px 25px;
   margin: 2px 0;
 
 `
