@@ -2,11 +2,14 @@ import React from 'react'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
 import { openListModal, setSelectedList } from '../actions'
+import ReactTooltip from 'react-tooltip'
+
+import AddIcon from '../assets/addLight.svg'
 
 const Container = styled.div`
   min-height: 100vh;
   height: 100%;
-  background: darkblue;
+  background: #222831;
   width: 300px;
   padding: 25px 0 25px 25px;
   color: #f4f4f4;
@@ -18,27 +21,12 @@ const Header = styled.div`
   justify-content: space-between;
   align-items: center;
   margin-bottom: 26px;
+  margin-top: 50px;
 `
 
 const Title = styled.h3`
   font-size: 16px;
   font-weight: 500;
-`
-
-const Button = styled.button`
-  background: transparent;
-  outline: none;
-  border: 2px solid #e3e3e3;
-  border-radius: 50%;
-  height: 20px;
-  width: 20px;
-  color: inherit;
-  cursor: pointer;
-
-  &:hover {
-    color: #fff;
-    border: 2px solid #fff;
-  }
 `
 
 const ListsContainer = styled.div``
@@ -48,11 +36,27 @@ const Lists = styled.ul`
 
 const Item = styled.li`
   cursor: pointer;
-  background: ${props => props.selected ? 'red' : 'transparent'};
+  background: ${props => props.selected ? '#00adb5' : 'transparent'};
   border-radius: 3px 0 0 3px;
-  padding: 6px 0px 6px 25px;
+  padding: 4px 0px 4px 25px;
   margin: 2px 0;
+  font-size: 16px;
+`
 
+const IconContainer = styled.div`
+  cursor: pointer;
+  width: 15px;
+  height: 15px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`
+
+const Icon = styled.img`
+  display: block;
+  width: auto;
+  height: 100%;
 `
 
 const ListBar = ({ lists, openListModal, setSelectedList }) => {
@@ -62,7 +66,10 @@ const ListBar = ({ lists, openListModal, setSelectedList }) => {
     <Container>
       <Header>
         <Title>My Lists</Title>
-        <Button onClick={openListModal}>+</Button>
+        <IconContainer onClick={openListModal}>
+          <Icon src={AddIcon} data-tip="Create List"/>
+          <ReactTooltip place="bottom" type="dark" effect="solid"/>
+        </IconContainer>
       </Header>
       <ListsContainer>
         <Lists>
