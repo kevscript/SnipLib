@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
 import ReactTooltip from 'react-tooltip'
@@ -71,6 +71,8 @@ const SnipsBar = ({ lists, snippets,  setViewMode }) => {
   const selectedList = allLists.find(x => x.selected === true)
   const { viewMode, allSnippets } = snippets
 
+  const selectedSnippets = allSnippets.filter(x => x.parentId === selectedList.createdAt)
+
   const handleAddClick = () => {
     if(viewMode !== 'create') {
       setViewMode('create')
@@ -104,10 +106,10 @@ const SnipsBar = ({ lists, snippets,  setViewMode }) => {
       </Header>
       <SnipsContainer>
         {
-          allSnippets.length > 0 &&
-            allSnippets.map(x => {
+          selectedSnippets.length > 0 &&
+            selectedSnippets.map(x => {
               return (
-                <li>{x.name}</li>
+                <li key={x.createdAt}>{x.name}</li>
               )
             })
         }
