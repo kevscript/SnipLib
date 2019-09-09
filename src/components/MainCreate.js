@@ -70,10 +70,10 @@ const EditorContainer = styled.div`
   margin: 25px;
 `
 
-const MainCreate = ({ snippets, lists, changeSnippetCode, changeSnippetName, changeSnippetList, addNewSnippet, resetSnippetInputs }) => {
+const MainCreate = ({ snippets, lists, changeSnippetCode, changeSnippetName, changeSnippetList, addNewSnippet, resetSnippetInputs, setViewMode }) => {
 
   const { allLists } = lists
-  const { codeInput, syntaxInput, nameInput, listId } = snippets
+  const { codeInput, syntaxInput, nameInput, parentId } = snippets
 
   const handleAdd = () => {
     addNewSnippet()
@@ -81,6 +81,7 @@ const MainCreate = ({ snippets, lists, changeSnippetCode, changeSnippetName, cha
   }
 
   const handleCancel = () => {
+    setViewMode('')
     resetSnippetInputs()
   }
 
@@ -89,7 +90,7 @@ const MainCreate = ({ snippets, lists, changeSnippetCode, changeSnippetName, cha
       <Header>
         <Title>New Snippet</Title>
         <ActionsContainer>
-          <Button>cancel</Button>
+          <Button onClick={handleCancel}>cancel</Button>
           <Button onClick={handleAdd}>save</Button>
         </ActionsContainer>
       </Header>
@@ -99,8 +100,8 @@ const MainCreate = ({ snippets, lists, changeSnippetCode, changeSnippetName, cha
 
           {
             allLists &&
-            <Select onChange={e => changeSnippetList(e.target.id)}>
-              {allLists.map(x => <option key={x.createdAt} id={x.createdAt}>{x.name}</option>)}
+            <Select onChange={e => changeSnippetList(e.target.value)}>
+              {allLists.map(x => <option key={x.createdAt} value={x.createdAt}>{x.name}</option>)}
             </Select>
           }
 
