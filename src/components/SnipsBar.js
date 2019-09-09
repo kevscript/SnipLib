@@ -3,8 +3,13 @@ import { connect } from 'react-redux'
 import styled from 'styled-components'
 import ReactTooltip from 'react-tooltip'
 
+import { 
+  setViewMode
+} from '../actions'
+
 import AddIcon from '../assets/addDark.svg'
-import MoreIcon from '../assets/more.svg'
+import DeleteIcon from '../assets/deleteDark.svg'
+import EditIcon from '../assets/editDark.svg'
 
 const Container = styled.div`
   min-height: 100vh;
@@ -54,66 +59,70 @@ const Icon = styled.img`
   height: 100%;
 `
 
-const SnipsContainer = styled.div``
+const SnipsContainer = styled.ul``
 
-
-const Menu = styled.ul`
-  position: absolute;
-  right: -30px;
-  top: 35px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-  z-index: 999;
-  background: #fff;
+const TooltipText = styled.span`
+  color: ${props => props.dark ? '#333' : 'inherit'};
 `
 
-const MenuItem = styled.li`
-  padding: 5px;
-  font-size: 12px;
-  cursor: pointer;
+const SnipsBar = ({ lists, snippets,  setViewMode }) => {
 
-  &:hover {
-    background: #f4f4f4;
-  }
-`
-
-const SnipsBar = ({ lists }) => {
-
-  const [openOptions, setOpenOptions] = useState(false)
   const { allLists } = lists
   const selectedList = allLists.find(x => x.selected === true)
+  const { viewMode, allSnippets } = snippets
+
+  const handleAddClick = () => {
+    if(viewMode !== 'create') {
+      setViewMode('create')
+    }
+  }
 
   return (
     <Container>
       <Header>
         <Title>{selectedList.name}</Title>
         <ActionsContainer>
-          <IconContainer>
-            <Icon  src={AddIcon} data-tip="Create Snippet" />
-            <ReactTooltip place="bottom" type="dark" effect="solid"/>
+          <IconContainer onClick={handleAddClick}>
+            <Icon src={AddIcon} data-tip data-for="addSnippet" />
+            <ReactTooltip id='addSnippet' type='dark' place='bottom'>
+              <TooltipText>Add Snippet</TooltipText>
+            </ReactTooltip>
           </IconContainer>
-          <IconContainer onClick={() => setOpenOptions(!openOptions)}>
-            <Icon src={MoreIcon} data-tip="More Options"/>
-            <ReactTooltip place="bottom" type="dark" effect="solid"/>
+          <IconContainer>
+            <Icon src={EditIcon} data-tip data-for="editList" />
+            <ReactTooltip id='editList' type='dark' place='bottom'>
+              <TooltipText>Edit List</TooltipText>
+            </ReactTooltip>
+          </IconContainer>
+          <IconContainer>
+            <Icon src={DeleteIcon} data-tip data-for="deleteList" />
+            <ReactTooltip id='deleteList' type='warning' place='bottom'>
+              <TooltipText dark>Delete List</TooltipText>
+            </ReactTooltip>
           </IconContainer>
         </ActionsContainer>
-        {openOptions && 
-          <Menu>
-            <MenuItem>Edit List</MenuItem>
-            <MenuItem>Delete List</MenuItem>
-          </Menu>}
       </Header>
       <SnipsContainer>
-
+        {
+          allSnippets.length > 0 &&
+            allSnippets.map(x => {
+              return (
+                <li>{x.name}</li>
+              )
+            })
+        }
       </SnipsContainer>
     </Container>
   )
 }
 
 const mapStateToProps = state => ({
-  lists: state.lists
+  lists: state.lists,
+  snippets: state.snippets
 })
 
-export default connect(mapStateToProps, null)(SnipsBar)
+const mapDispatchToProps = {
+  setViewMode
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SnipsBar)

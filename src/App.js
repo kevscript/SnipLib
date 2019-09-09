@@ -16,7 +16,7 @@ const Container = styled.div`
 
 const App = ({ lists }) => {
   const { modalOpen } = lists
-  
+
   return (
     <Container>
       <GlobalStyle />
