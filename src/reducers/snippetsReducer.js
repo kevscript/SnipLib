@@ -14,7 +14,7 @@ const initialState = {
   nameInput: '',
   syntaxInput: '',
   codeInput: '',
-  listId: '',
+  parentId: '',
   allSnippets: [],
 }
 
@@ -36,7 +36,7 @@ export default (state = initialState, action) => {
     case CHANGE_SNIPPET_LIST:
       return {
         ...state,
-        listId: action.payload
+        parentId: parseInt(action.payload)
       }
 
     case CHANGE_SNIPPET_CODE:
@@ -63,7 +63,7 @@ export default (state = initialState, action) => {
             selected: false,
             name: state.nameInput,
             syntax: state.syntax,
-            parentList: state.listId,
+            parentId: state.parentId,
             code: state.codeInput,
             createdAt: Date.now()
           }
@@ -90,7 +90,7 @@ export default (state = initialState, action) => {
         nameInput: '',
         syntaxInput: '',
         codeInput: '',
-        listId: '',
+        parentId: '',
       }
 
     default:
