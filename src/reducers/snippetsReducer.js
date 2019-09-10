@@ -14,7 +14,7 @@ const initialState = {
   nameInput: '',
   syntaxInput: '',
   codeInput: '',
-  parentId: '',
+  parentId: null,
   allSnippets: [],
 }
 
