@@ -4,7 +4,8 @@ import styled from 'styled-components'
 import ReactTooltip from 'react-tooltip'
 
 import { 
-  setViewMode
+  setViewMode,
+  deleteList
 } from '../actions'
 
 import AddIcon from '../assets/addDark.svg'
@@ -85,7 +86,7 @@ const SnipItem = styled.li`
   padding-left: 25px;
 `
 
-const SnipsBar = ({ lists, snippets,  setViewMode }) => {
+const SnipsBar = ({ lists, snippets, setViewMode, deleteList }) => {
 
   const { allLists } = lists
   const selectedList = allLists.find(x => x.selected === true)
@@ -97,6 +98,20 @@ const SnipsBar = ({ lists, snippets,  setViewMode }) => {
     if(viewMode !== 'create') {
       setViewMode('create')
     }
+  }
+
+  if (allLists.length === 0) {
+    return (
+      <Container>
+        <p>Create a List to start adding snippets :)</p>
+      </Container>
+    )
+  }
+
+  if (!selectedList) {
+    return (
+      <Container></Container>
+    )
   }
 
   return (
@@ -119,7 +134,7 @@ const SnipsBar = ({ lists, snippets,  setViewMode }) => {
               <TooltipText>Edit List</TooltipText>
             </ReactTooltip>
           </IconContainer>
-          <IconContainer>
+          <IconContainer onClick={deleteList}>
             <Icon src={DeleteIcon} data-tip data-for="deleteList" />
             <ReactTooltip id='deleteList' type='warning' place='bottom'>
               <TooltipText dark>Delete List</TooltipText>
@@ -147,7 +162,8 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = {
-  setViewMode
+  setViewMode,
+  deleteList
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SnipsBar)
