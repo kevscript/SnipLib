@@ -65,6 +65,16 @@ const TooltipText = styled.span`
   color: ${props => props.dark ? '#333' : 'inherit'};
 `
 
+const TitleContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  span {
+    font-size: 12px;
+    color: #333;
+  }
+`
+
 const SnipsBar = ({ lists, snippets,  setViewMode }) => {
 
   const { allLists } = lists
@@ -82,7 +92,10 @@ const SnipsBar = ({ lists, snippets,  setViewMode }) => {
   return (
     <Container>
       <Header>
-        <Title>{selectedList.name}</Title>
+        <TitleContainer>
+          <Title>{selectedList.name}</Title>
+          <span>{selectedSnippets.length} snippets</span>
+        </TitleContainer>
         <ActionsContainer>
           <IconContainer onClick={handleAddClick}>
             <Icon src={AddIcon} data-tip data-for="addSnippet" />
