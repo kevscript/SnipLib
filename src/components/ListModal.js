@@ -21,13 +21,7 @@ const Modal = styled.div`
 `
 
 const ListModal = ({ lists, closeListModal, changeListModalName, addNewList, resetListModalName }) => {
-  const { nameInput } = lists
-
-  const handleCreation = () => {
-    addNewList()
-    resetListModalName()
-    closeListModal()
-  }
+  const { nameInput, error } = lists
 
   const handleCancelation = () => {
     resetListModalName()
@@ -36,7 +30,7 @@ const ListModal = ({ lists, closeListModal, changeListModalName, addNewList, res
 
   const handleKeyUp = (e) => {
     if (e.keyCode === 13) {
-      handleCreation()
+      addNewList()
     } else if (e.keyCode === 27) {
       handleCancelation()
     }
@@ -54,7 +48,8 @@ const ListModal = ({ lists, closeListModal, changeListModalName, addNewList, res
           type="text" 
           name="list-name" 
         />
-        <button onClick={handleCreation}>Create</button>
+        {error ? error : null}
+        <button onClick={addNewList}>Create</button>
         <button onClick={handleCancelation}>Cancel</button>
       </Modal>
     </Container>
