@@ -4,13 +4,16 @@ import {
   CHANGE_LIST_MODAL_NAME,
   RESET_LIST_MODAL_NAME,
   ADD_NEW_LIST,
-  SET_SELECTED_LIST
+  DELETE_LIST,
+  SET_SELECTED_LIST,
+  HANDLE_ERROR
 } from '../actions/types'
 
 const initialState = {
+  error: '',
   modalOpen: false,
   nameInput: '',
-  allLists: [{name: 'sandbox', createdAt: Date.now(), selected: true}]
+  allLists: [{ name: 'sandbox', createdAt: Date.now(), selected: true }]
 }
 
 export default (state = initialState, action) => {
@@ -42,7 +45,7 @@ export default (state = initialState, action) => {
 
     case ADD_NEW_LIST:
       const selected = state.allLists.findIndex(x => x.selected === true)
-      state.allLists[selected] = {...state.allLists[selected], selected: false }
+      state.allLists[selected] = { ...state.allLists[selected], selected: false }
 
       return {
         ...state,
@@ -56,14 +59,28 @@ export default (state = initialState, action) => {
         ]
       }
 
+    case DELETE_LIST:
+      const newLists = state.allLists.filter(x => x.selected !== true)
+
+      return {
+        ...state,
+        allLists: [...newLists]
+      }
+
     case SET_SELECTED_LIST:
       const oldSelected = state.allLists.findIndex(x => x.selected === true)
-      state.allLists[oldSelected] = {...state.allLists[oldSelected], selected: false }
+      state.allLists[oldSelected] = { ...state.allLists[oldSelected], selected: false }
       const newSelected = state.allLists.findIndex(x => x.createdAt === action.payload)
-      state.allLists[newSelected] = {...state.allLists[newSelected], selected: true }
+      state.allLists[newSelected] = { ...state.allLists[newSelected], selected: true }
 
       return {
         ...state
+      }
+
+    case HANDLE_ERROR:
+      return {
+        ...state,
+        error: action.payload
       }
 
     default:

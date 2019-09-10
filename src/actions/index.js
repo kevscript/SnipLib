@@ -4,6 +4,7 @@ import {
   CHANGE_LIST_MODAL_NAME,
   RESET_LIST_MODAL_NAME,
   ADD_NEW_LIST,
+  DELETE_LIST,
   SET_SELECTED_LIST,
   CHANGE_SNIPPET_NAME,
   CHANGE_SNIPPET_SYNTAX,
@@ -32,9 +33,31 @@ export const resetListModalName = () => ({
   type: RESET_LIST_MODAL_NAME
 })
 
-export const addNewList = () => ({
-  type: ADD_NEW_LIST
-})
+export const addNewList = () => {
+  return (dispatch, getState) => {
+    const nameInput = getState().lists.nameInput
+
+    if(nameInput.trim() === '') {
+      return dispatch(handleError('Enter a valid name for your list'))
+    }
+
+    dispatch({type: ADD_NEW_LIST})
+    dispatch(resetListModalName())
+    dispatch(closeListModal())
+  }
+}
+
+export const deleteList = () => {
+  return (dispatch, getState) => {
+    const selectedList = getState().lists.allLists.find(x => x.selected === true)
+    const listId = selectedList.createdAt
+
+    dispatch({
+      type: DELETE_LIST,
+      payload: listId
+    })
+  }
+}
 
 export const setSelectedList = (id) => ({
   type: SET_SELECTED_LIST,

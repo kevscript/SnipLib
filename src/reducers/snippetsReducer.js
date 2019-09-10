@@ -7,7 +7,8 @@ import {
   SET_SELECTED_SNIPPET,
   SET_VIEW_MODE,
   RESET_SNIPPET_INPUTS,
-  HANDLE_ERROR
+  HANDLE_ERROR,
+  DELETE_LIST
 } from '../actions/types'
 
 const initialState = {
@@ -99,6 +100,14 @@ export default (state = initialState, action) => {
       return {
         ...state,
         error: action.payload
+      }
+
+    case DELETE_LIST:
+      const newSnippets = state.allSnippets.filter(x => x.parentId !== action.payload)
+
+      return {
+        ...state,
+        allSnippets: [...newSnippets]
       }
 
     default:
