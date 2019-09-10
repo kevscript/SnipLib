@@ -73,12 +73,12 @@ const EditorContainer = styled.div`
 const MainCreate = ({ snippets, lists, changeSnippetCode, changeSnippetName, changeSnippetList, addNewSnippet, resetSnippetInputs, setViewMode }) => {
 
   const { allLists } = lists
-  const { codeInput, syntaxInput, nameInput, parentId } = snippets
+  const { codeInput, syntaxInput, nameInput, parentId, error } = snippets
 
   const handleAdd = () => {
     addNewSnippet()
-    setViewMode('')
-    resetSnippetInputs()
+    /*setViewMode('')
+    resetSnippetInputs()*/
   }
 
   const handleCancel = () => {
@@ -94,7 +94,7 @@ const MainCreate = ({ snippets, lists, changeSnippetCode, changeSnippetName, cha
   return (
     <Container>
       <Header>
-        <Title>New Snippet</Title>
+        <Title>{error ? error : 'New Snippet'}</Title>
         <ActionsContainer>
           <Button onClick={handleCancel}>cancel</Button>
           <Button onClick={handleAdd}>save</Button>
