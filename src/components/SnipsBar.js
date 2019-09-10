@@ -72,7 +72,17 @@ const TitleContainer = styled.div`
   span {
     font-size: 12px;
     color: #333;
+    font-style: italic;
   }
+`
+
+const SnipItem = styled.li`
+  width: 100%;
+  height: 40px;
+  background: red;
+  display: flex;
+  align-items: center;
+  padding-left: 25px;
 `
 
 const SnipsBar = ({ lists, snippets,  setViewMode }) => {
@@ -122,7 +132,7 @@ const SnipsBar = ({ lists, snippets,  setViewMode }) => {
           selectedSnippets.length > 0 &&
             selectedSnippets.map(x => {
               return (
-                <li key={x.createdAt}>{x.name}</li>
+                <SnipItem key={x.createdAt}>{x.name}</SnipItem>
               )
             })
         }
