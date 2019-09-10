@@ -6,10 +6,12 @@ import {
   ADD_NEW_SNIPPET,
   SET_SELECTED_SNIPPET,
   SET_VIEW_MODE,
-  RESET_SNIPPET_INPUTS
+  RESET_SNIPPET_INPUTS,
+  HANDLE_ERROR
 } from '../actions/types'
 
 const initialState = {
+  error: '',
   viewMode: '',
   nameInput: '',
   syntaxInput: '',
@@ -91,6 +93,12 @@ export default (state = initialState, action) => {
         syntaxInput: '',
         codeInput: '',
         parentId: '',
+      }
+
+    case HANDLE_ERROR:
+      return {
+        ...state,
+        error: action.payload
       }
 
     default:

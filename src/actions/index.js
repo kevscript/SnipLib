@@ -11,7 +11,8 @@ import {
   SET_VIEW_MODE,
   ADD_NEW_SNIPPET,
   CHANGE_SNIPPET_LIST,
-  RESET_SNIPPET_INPUTS
+  RESET_SNIPPET_INPUTS,
+  HANDLE_ERROR
 } from './types'
 
 export const openListModal = () => ({
@@ -57,9 +58,31 @@ export const setViewMode = (value) => ({
   payload: value
 })
 
-export const addNewSnippet = () => ({
-  type: ADD_NEW_SNIPPET
-})
+export const addNewSnippet = () => {
+  return (dispatch, getState) => {
+    const snippets = getState().snippets
+    const { parentId, codeInput, nameInput } = snippets
+
+    if (codeInput.trim() === '') {
+      return dispatch(handleError('Your snippet is empty'))
+    }
+
+    if (nameInput.trim() === '') {
+      return dispatch(handleError('Add a title for your snippet'))
+    }
+
+    if (parentId === null) {
+      return dispatch(handleError('Select a valid parent list'))
+    }
+
+    else {
+      dispatch({ type: ADD_NEW_SNIPPET })
+      dispatch(setViewMode(''))
+      dispatch(resetSnippetInputs())
+    }
+  }
+  
+}
 
 export const changeSnippetList = (id) => ({
   type: CHANGE_SNIPPET_LIST,
@@ -73,4 +96,9 @@ export const changeSnippetSyntax = (value) => ({
 
 export const resetSnippetInputs = () => ({
   type: RESET_SNIPPET_INPUTS
+})
+
+export const handleError = (message) => ({
+  type: HANDLE_ERROR,
+  payload: message
 })
