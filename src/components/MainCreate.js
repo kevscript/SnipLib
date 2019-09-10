@@ -77,12 +77,18 @@ const MainCreate = ({ snippets, lists, changeSnippetCode, changeSnippetName, cha
 
   const handleAdd = () => {
     addNewSnippet()
+    setViewMode('')
     resetSnippetInputs()
   }
 
   const handleCancel = () => {
     setViewMode('')
     resetSnippetInputs()
+  }
+
+  const handleListSelect = (e) => {
+    const value = e.target.value
+    changeSnippetList(value)
   }
 
   return (
@@ -100,7 +106,8 @@ const MainCreate = ({ snippets, lists, changeSnippetCode, changeSnippetName, cha
 
           {
             allLists &&
-            <Select onChange={e => changeSnippetList(e.target.value)}>
+            <Select onChange={handleListSelect}>
+              <option value="">Select list</option>
               {allLists.map(x => <option key={x.createdAt} value={x.createdAt}>{x.name}</option>)}
             </Select>
           }
