@@ -106,6 +106,7 @@ export const addNewSnippet = () => {
       dispatch({ type: ADD_NEW_SNIPPET })
       dispatch(setViewMode(''))
       dispatch(resetSnippetInputs())
+      dispatch(resetError())
     }
   }
   
