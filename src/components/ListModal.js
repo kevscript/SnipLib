@@ -54,6 +54,7 @@ const Input = styled.input`
   position: relative;
   padding: 10px;
   font-size: 16px;
+  border: 1px solid rgba(0,0,0,0.3);
 `
 
 const ListModal = ({ lists, closeListModal, changeListModalName, addNewList, resetListModalName }) => {

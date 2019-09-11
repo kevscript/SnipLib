@@ -86,6 +86,14 @@ const SnipItem = styled.li`
   padding-left: 25px;
 `
 
+const Hint = styled.p`
+  font-size: 14px;
+  font-weight: 500;
+  color: #bbb;
+  padding: 25px;
+` 
+
+
 const SnipsBar = ({ lists, snippets, setViewMode, deleteList }) => {
 
   const { allLists } = lists
@@ -103,7 +111,7 @@ const SnipsBar = ({ lists, snippets, setViewMode, deleteList }) => {
   if (allLists.length === 0) {
     return (
       <Container>
-        <p>Create a List to start adding snippets :)</p>
+        <Hint>Create a List to start adding snippets :)</Hint>
       </Container>
     )
   }
@@ -144,12 +152,17 @@ const SnipsBar = ({ lists, snippets, setViewMode, deleteList }) => {
       </Header>
       <SnipsContainer>
         {
-          selectedSnippets.length > 0 &&
-            selectedSnippets.map(x => {
+          selectedSnippets.length > 0 
+          
+          ? selectedSnippets.map(x => {
               return (
                 <SnipItem key={x.createdAt}>{x.name}</SnipItem>
               )
             })
+
+          : <Container>
+              <Hint>Your list is empty, time to add some snippets.</Hint>
+            </Container>
         }
       </SnipsContainer>
     </Container>

@@ -39,6 +39,9 @@ const Title = styled.h3`
   font-weight: 500;
 `
 
+const TitleError = styled(Title)`
+  color: darkred;
+`
 
 const SubHeader = styled.div`
   display: flex;
@@ -56,7 +59,7 @@ const Input = styled.input`
 `
 
 const Select = styled.select`
-  min-width: 100px;
+  min-width: 150px;
   padding: 10px;
 `
 
@@ -94,7 +97,10 @@ const MainCreate = ({ snippets, lists, changeSnippetCode, changeSnippetName, cha
   return (
     <Container>
       <Header>
-        <Title>{error ? error : 'New Snippet'}</Title>
+        { error 
+          ? <TitleError>{error}</TitleError>
+          : <Title>New Snippet</Title>
+        }
         <ActionsContainer>
           <Button onClick={handleCancel}>cancel</Button>
           <Button onClick={handleAdd}>save</Button>
