@@ -8,7 +8,8 @@ import {
   SET_VIEW_MODE,
   RESET_SNIPPET_INPUTS,
   HANDLE_ERROR,
-  DELETE_LIST
+  DELETE_LIST,
+  RESET_ERROR
 } from '../actions/types'
 
 const initialState = {
@@ -100,6 +101,12 @@ export default (state = initialState, action) => {
       return {
         ...state,
         error: action.payload
+      }
+
+    case RESET_ERROR:
+      return {
+        ...state,
+        error: ''
       }
 
     case DELETE_LIST:

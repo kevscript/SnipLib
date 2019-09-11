@@ -6,7 +6,8 @@ import {
   ADD_NEW_LIST,
   DELETE_LIST,
   SET_SELECTED_LIST,
-  HANDLE_ERROR
+  HANDLE_ERROR,
+  RESET_ERROR
 } from '../actions/types'
 
 const initialState = {
@@ -81,6 +82,12 @@ export default (state = initialState, action) => {
       return {
         ...state,
         error: action.payload
+      }
+
+    case RESET_ERROR:
+      return {
+        ...state,
+        error: ''
       }
 
     default:

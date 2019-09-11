@@ -13,16 +13,21 @@ import {
   ADD_NEW_SNIPPET,
   CHANGE_SNIPPET_LIST,
   RESET_SNIPPET_INPUTS,
-  HANDLE_ERROR
+  HANDLE_ERROR,
+  RESET_ERROR
 } from './types'
 
 export const openListModal = () => ({
   type: OPEN_LIST_MODAL
 })
 
-export const closeListModal = () => ({
-  type: CLOSE_LIST_MODAL
-})
+export const closeListModal = () => {
+  return (dispatch) => {
+    dispatch({ type: CLOSE_LIST_MODAL })
+    dispatch(resetError())
+    dispatch(resetListModalName())
+  }
+}
 
 export const changeListModalName = (value) => ({
   type: CHANGE_LIST_MODAL_NAME,
@@ -38,11 +43,10 @@ export const addNewList = () => {
     const nameInput = getState().lists.nameInput
 
     if(nameInput.trim() === '') {
-      return dispatch(handleError('Enter a valid name for your list'))
+      return dispatch(handleError('Name is empty or not valid'))
     }
 
     dispatch({type: ADD_NEW_LIST})
-    dispatch(resetListModalName())
     dispatch(closeListModal())
   }
 }
@@ -124,4 +128,8 @@ export const resetSnippetInputs = () => ({
 export const handleError = (message) => ({
   type: HANDLE_ERROR,
   payload: message
+})
+
+export const resetError = () => ({
+  type: RESET_ERROR
 })
