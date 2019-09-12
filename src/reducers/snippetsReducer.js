@@ -64,7 +64,7 @@ export default (state = initialState, action) => {
         allSnippets: [
           ...state.allSnippets,
           {
-            selected: false,
+            selected: true,
             name: state.nameInput,
             syntax: state.syntax,
             parentId: state.parentId,

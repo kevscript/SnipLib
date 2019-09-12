@@ -14,7 +14,8 @@ import {
   CHANGE_SNIPPET_LIST,
   RESET_SNIPPET_INPUTS,
   HANDLE_ERROR,
-  RESET_ERROR
+  RESET_ERROR,
+  SET_SELECTED_SNIPPET
 } from './types'
 
 export const openListModal = () => ({
@@ -70,6 +71,11 @@ export const setSelectedList = (id) => ({
 
 //////////////////////////////////////////////////////////////////
 
+export const setSelectedSnippet = (id) => ({
+  type: SET_SELECTED_SNIPPET,
+  payload: id
+})
+
 export const changeSnippetName = (value) => ({
   type: CHANGE_SNIPPET_NAME,
   payload: value
@@ -104,7 +110,7 @@ export const addNewSnippet = () => {
 
     else {
       dispatch({ type: ADD_NEW_SNIPPET })
-      dispatch(setViewMode(''))
+      dispatch(setViewMode('read'))
       dispatch(resetSnippetInputs())
       dispatch(resetError())
     }
