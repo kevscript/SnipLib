@@ -9,7 +9,8 @@ import {
   RESET_SNIPPET_INPUTS,
   HANDLE_ERROR,
   DELETE_LIST,
-  RESET_ERROR
+  RESET_ERROR,
+  DELETE_SNIPPET
 } from '../actions/types'
 
 const initialState = {
@@ -18,7 +19,7 @@ const initialState = {
   nameInput: '',
   syntaxInput: '',
   codeInput: '',
-  parentId: null,
+  parentId: '',
   allSnippets: [],
 }
 
@@ -115,6 +116,14 @@ export default (state = initialState, action) => {
       return {
         ...state,
         allSnippets: [...newSnippets]
+      }
+
+    case DELETE_SNIPPET:
+      const newSnips = state.allSnippets.filter(x => x.selected !== true)
+
+      return {
+        ...state,
+        allSnippets: [...newSnips]
       }
 
     default:

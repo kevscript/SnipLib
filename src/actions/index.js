@@ -15,7 +15,8 @@ import {
   RESET_SNIPPET_INPUTS,
   HANDLE_ERROR,
   RESET_ERROR,
-  SET_SELECTED_SNIPPET
+  SET_SELECTED_SNIPPET,
+  DELETE_SNIPPET
 } from './types'
 
 export const openListModal = () => ({
@@ -104,7 +105,7 @@ export const addNewSnippet = () => {
       return dispatch(handleError('Add a title for your snippet'))
     }
 
-    if (parentId === null) {
+    if (parentId === '') {
       return dispatch(handleError('Select a valid parent list'))
     }
 
@@ -139,4 +140,8 @@ export const handleError = (message) => ({
 
 export const resetError = () => ({
   type: RESET_ERROR
+})
+
+export const deleteSnippet = () => ({
+  type: DELETE_SNIPPET
 })
