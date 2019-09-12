@@ -8,17 +8,13 @@ require('codemirror/mode/xml/xml');
 require('codemirror/mode/css/css');
 require('codemirror/mode/javascript/javascript')
 
-const Editor = ({ handleChange, value = 'write code here', theme = 'material', language = 'javascript'}) => {
- let opt = {
-    theme: theme,
-    mode: language,
-    lineNumbers: true
-  }
+const Editor = ({ handleChange, value = 'write code here', options}) => {
+
 
   return (
     <CodeMirror
       value={value}
-      options={opt}
+      options={options}
       onBeforeChange={(editor, data, val) => {
         handleChange(val)
       }}
