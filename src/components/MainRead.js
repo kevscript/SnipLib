@@ -1,6 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
 import ReactTooltip from 'react-tooltip'
+import { connect } from 'react-redux'
+
+import { deleteSnippet } from '../actions'
 
 import EditIcon from '../assets/editDark.svg'
 import DeleteIcon from '../assets/deleteDark.svg'
@@ -74,7 +77,7 @@ const EditorContainer = styled.div`
   margin: 25px;
 `
 
-const MainRead = ({ data }) => {
+const MainRead = ({ data, deleteSnippet }) => {
   const { selected, name, syntax, parentId, code, createdAt } = data
 
   const options = {
@@ -95,7 +98,7 @@ const MainRead = ({ data }) => {
               <TooltipText>Edit Snippet</TooltipText>
             </ReactTooltip>
           </IconContainer>
-          <IconContainer>
+          <IconContainer onClick={deleteSnippet}>
             <Icon src={DeleteIcon} data-tip data-for="deleteSnippet" />
             <ReactTooltip id='deleteSnippet' type='warning'>
               <TooltipText dark>Delete Snippet</TooltipText>
@@ -109,11 +112,15 @@ const MainRead = ({ data }) => {
           <p>Javascript</p>
         </SubHeader>
         <EditorContainer>
-          <Editor value={code} options={options}/>
+          <Editor value={code} options={options} />
         </EditorContainer>
       </div>
     </Container>
   )
 }
 
-export default MainRead
+const mapDispatchToProps = {
+  deleteSnippet
+}
+
+export default connect(null, mapDispatchToProps)(MainRead)
