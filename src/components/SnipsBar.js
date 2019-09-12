@@ -3,9 +3,10 @@ import { connect } from 'react-redux'
 import styled from 'styled-components'
 import ReactTooltip from 'react-tooltip'
 
-import { 
+import {
   setViewMode,
-  deleteList
+  deleteList,
+  setSelectedSnippet
 } from '../actions'
 
 import AddIcon from '../assets/addDark.svg'
@@ -80,10 +81,11 @@ const TitleContainer = styled.div`
 const SnipItem = styled.li`
   width: 100%;
   height: 40px;
-  background: red;
+  background: ${props => props.selected ? '#fff' : 'transparent'};
   display: flex;
   align-items: center;
   padding-left: 25px;
+  cursor: pointer;
 `
 
 const Hint = styled.p`
@@ -91,19 +93,18 @@ const Hint = styled.p`
   font-weight: 500;
   color: #bbb;
   padding: 25px;
-` 
+`
 
 
-const SnipsBar = ({ lists, snippets, setViewMode, deleteList }) => {
+const SnipsBar = ({ lists, snippets, setViewMode, deleteList, setSelectedSnippet }) => {
 
   const { allLists } = lists
   const selectedList = allLists.find(x => x.selected === true)
   const { viewMode, allSnippets } = snippets
-
-  const selectedSnippets = allSnippets.filter(x => x.parentId === selectedList.createdAt)
+  const activeSnippets = allSnippets.filter(x => x.parentId === selectedList.createdAt)
 
   const handleAddClick = () => {
-    if(viewMode !== 'create') {
+    if (viewMode !== 'create') {
       setViewMode('create')
     }
   }
@@ -127,7 +128,7 @@ const SnipsBar = ({ lists, snippets, setViewMode, deleteList }) => {
       <Header>
         <TitleContainer>
           <Title>{selectedList.name}</Title>
-          <span>{selectedSnippets.length} snippets</span>
+          <span>{activeSnippets.length} snippets</span>
         </TitleContainer>
         <ActionsContainer>
           <IconContainer onClick={handleAddClick}>
@@ -152,15 +153,21 @@ const SnipsBar = ({ lists, snippets, setViewMode, deleteList }) => {
       </Header>
       <SnipsContainer>
         {
-          selectedSnippets.length > 0 
-          
-          ? selectedSnippets.map(x => {
+          activeSnippets.length > 0
+
+            ? activeSnippets.map(x => {
               return (
-                <SnipItem key={x.createdAt}>{x.name}</SnipItem>
+                <SnipItem 
+                  key={x.createdAt} 
+                  selected={x.selected}
+                  onClick={() => setSelectedSnippet(x.createdAt)}
+                >
+                  {x.name}
+                </SnipItem>
               )
             })
 
-          : <Container>
+            : <Container>
               <Hint>Your list is empty, time to add some snippets.</Hint>
             </Container>
         }
@@ -176,7 +183,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   setViewMode,
-  deleteList
+  deleteList,
+  setSelectedSnippet
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SnipsBar)
