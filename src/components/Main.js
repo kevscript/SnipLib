@@ -9,6 +9,12 @@ const Container = styled.div`
   flex-grow: 1;
 `
 
+const Empty = styled.div`
+  width: 100%;
+  height: 100%;
+  background-color: lightgrey;
+`
+
 const Main = ({ snippets }) => {
   const { viewMode, allSnippets } = snippets
   const selectedSnippet = allSnippets.find(x => x.selected === true)
@@ -21,6 +27,14 @@ const Main = ({ snippets }) => {
     )
   }
 
+  if (viewMode === 'read' && !selectedSnippet) {
+    return (
+      <Container>
+        <Empty />
+      </Container>
+    )
+  }
+  
   if (viewMode === 'read') {
     return (
       <Container>
@@ -31,7 +45,7 @@ const Main = ({ snippets }) => {
 
   return (
     <Container>
-      <h1>Nothing</h1>
+      <Empty />
     </Container>
   )
 }
