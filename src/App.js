@@ -10,8 +10,9 @@ import Main from './components/Main'
 
 const Container = styled.div`
   width: 100%;
-  min-height: 100vh;
+  height: 100vh;
   display: flex;
+  overflow: hidden;
 `
 
 const App = ({ lists }) => {
