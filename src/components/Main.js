@@ -10,7 +10,8 @@ const Container = styled.div`
 `
 
 const Main = ({ snippets }) => {
-  const { viewMode } = snippets
+  const { viewMode, allSnippets } = snippets
+  const selectedSnippet = allSnippets.find(x => x.selected === true)
 
   if (viewMode === 'create') {
     return (
@@ -23,7 +24,7 @@ const Main = ({ snippets }) => {
   if (viewMode === 'read') {
     return (
       <Container>
-        <MainRead />
+        <MainRead data={selectedSnippet} />
       </Container>
     )
   }
