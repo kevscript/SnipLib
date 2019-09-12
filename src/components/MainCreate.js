@@ -78,6 +78,12 @@ const MainCreate = ({ snippets, lists, changeSnippetCode, changeSnippetName, cha
   const { allLists } = lists
   const { codeInput, syntaxInput, nameInput, parentId, error } = snippets
 
+  const options = {
+    theme: 'material',
+    mode: 'javascript',
+    lineNumbers: true
+  }
+
   const handleAdd = () => {
     addNewSnippet()
     /*setViewMode('')
@@ -123,7 +129,7 @@ const MainCreate = ({ snippets, lists, changeSnippetCode, changeSnippetName, cha
         </SubHeader>
 
         <EditorContainer>
-          <Editor handleChange={changeSnippetCode} value={codeInput} />
+          <Editor handleChange={changeSnippetCode} value={codeInput} options={options}/>
         </EditorContainer>
 
       </div>
