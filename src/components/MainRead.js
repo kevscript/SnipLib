@@ -4,6 +4,7 @@ import ReactTooltip from 'react-tooltip'
 
 import EditIcon from '../assets/editDark.svg'
 import DeleteIcon from '../assets/deleteDark.svg'
+import Editor from './Editor'
 
 const Container = styled.div`
   flex-grow: 1;
@@ -69,11 +70,24 @@ const SubTitle = styled.h4`
   margin-right: 15px;
 `
 
-const MainRead = () => {
+const EditorContainer = styled.div`
+  margin: 25px;
+`
+
+const MainRead = ({ data }) => {
+  const { selected, name, syntax, parentId, code, createdAt } = data
+
+  const options = {
+    theme: 'material',
+    mode: 'javascript',
+    lineNumbers: true,
+    readOnly: true
+  }
+
   return (
     <Container>
       <Header>
-        <Title>Im title</Title>
+        <Title>{name}</Title>
         <ActionsContainer>
           <IconContainer>
             <Icon src={EditIcon} data-tip data-for="editSnippet" />
@@ -94,6 +108,9 @@ const MainRead = () => {
           <SubTitle>Syntax:</SubTitle>
           <p>Javascript</p>
         </SubHeader>
+        <EditorContainer>
+          <Editor value={code} options={options}/>
+        </EditorContainer>
       </div>
     </Container>
   )
