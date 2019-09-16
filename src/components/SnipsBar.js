@@ -6,7 +6,8 @@ import ReactTooltip from 'react-tooltip'
 import {
   setViewMode,
   deleteList,
-  setSelectedSnippet
+  setSelectedSnippet,
+  setEditList
 } from '../actions'
 
 import AddIcon from '../assets/addDark.svg'
@@ -96,7 +97,7 @@ const Hint = styled.p`
 `
 
 
-const SnipsBar = ({ lists, snippets, setViewMode, deleteList, setSelectedSnippet }) => {
+const SnipsBar = ({ lists, snippets, setViewMode, deleteList, setSelectedSnippet, setEditList }) => {
 
   const { allLists } = lists
   const selectedList = allLists.find(x => x.selected === true)
@@ -145,7 +146,7 @@ const SnipsBar = ({ lists, snippets, setViewMode, deleteList, setSelectedSnippet
               <TooltipText>Add Snippet</TooltipText>
             </ReactTooltip>
           </IconContainer>
-          <IconContainer>
+          <IconContainer onClick={setEditList}>
             <Icon src={EditIcon} data-tip data-for="editList" />
             <ReactTooltip id='editList' type='dark' place='bottom'>
               <TooltipText>Edit List</TooltipText>
@@ -193,7 +194,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   setViewMode,
   deleteList,
-  setSelectedSnippet
+  setSelectedSnippet,
+  setEditList
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SnipsBar)
