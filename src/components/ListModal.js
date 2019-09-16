@@ -3,19 +3,6 @@ import styled from 'styled-components'
 import { connect } from 'react-redux'
 import { closeListModal, changeListModalName, addNewList, resetListModalName } from '../actions'
 
-const Container = styled.div`
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 99;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(0,0,0,0.3);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`
-
 const Modal = styled.div`
   position: relative;
   display: flex;
@@ -74,30 +61,28 @@ const ListModal = ({ lists, closeListModal, changeListModalName, addNewList, res
   }
 
   return (
-    <Container>
-      <Modal>
-        <ModalSection>
-          <Input 
-            autoFocus={true}
-            onChange={(e) => changeListModalName(e.target.value)} 
-            onKeyUp={handleKeyUp}
-            value={nameInput}
-            type="text" 
-            name="list-name" 
-            placeholder="Enter a name for your list"
-          />
-          <ButtonsContainer>
-            <Button onClick={addNewList}>Create</Button>
-            <Button onClick={handleCancelation}>Cancel</Button>
-          </ButtonsContainer>
-        </ModalSection>
-        { error && 
-            <ModalSection>
-              <span>{error}</span>
-            </ModalSection>
-        }
-      </Modal>
-    </Container>
+    <Modal>
+      <ModalSection>
+        <Input 
+          autoFocus={true}
+          onChange={(e) => changeListModalName(e.target.value)} 
+          onKeyUp={handleKeyUp}
+          value={nameInput}
+          type="text" 
+          name="list-name" 
+          placeholder="Enter a name for your list"
+        />
+        <ButtonsContainer>
+          <Button onClick={addNewList}>Create</Button>
+          <Button onClick={handleCancelation}>Cancel</Button>
+        </ButtonsContainer>
+      </ModalSection>
+      { error && 
+          <ModalSection>
+            <span>{error}</span>
+          </ModalSection>
+      }
+    </Modal>
   )
 }
 
