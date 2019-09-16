@@ -5,6 +5,8 @@ import {
   RESET_LIST_MODAL_NAME,
   ADD_NEW_LIST,
   DELETE_LIST,
+  EDIT_LIST,
+  SET_EDIT_LIST,
   SET_SELECTED_LIST,
   CHANGE_SNIPPET_NAME,
   CHANGE_SNIPPET_SYNTAX,
@@ -30,6 +32,21 @@ export const closeListModal = () => {
     dispatch({ type: CLOSE_LIST_MODAL })
     dispatch(resetError())
     dispatch(resetListModalName())
+  }
+}
+
+export const setEditList = () => {
+  return (dispatch, getState) => {
+    const selectedList = {...getState().lists.allLists.find(x => x.selected === true)}
+    dispatch({ type: SET_EDIT_LIST, payload: selectedList.name })
+    dispatch(openListModal())
+  }
+}
+
+export const editList = () => {
+  return (dispatch) => {
+    dispatch({ type: EDIT_LIST })
+    dispatch(closeListModal())
   }
 }
 

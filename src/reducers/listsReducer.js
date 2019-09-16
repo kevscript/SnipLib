@@ -7,12 +7,15 @@ import {
   DELETE_LIST,
   SET_SELECTED_LIST,
   HANDLE_ERROR,
-  RESET_ERROR
+  RESET_ERROR,
+  EDIT_LIST,
+  SET_EDIT_LIST
 } from '../actions/types'
 
 const initialState = {
   error: '',
   modalOpen: false,
+  editMode: false,
   nameInput: '',
   allLists: [{ name: 'sandbox', createdAt: Date.now(), selected: true }]
 }
@@ -58,6 +61,28 @@ export default (state = initialState, action) => {
             selected: true
           }
         ]
+      }
+
+    case SET_EDIT_LIST:
+      return {
+        ...state,
+        editMode: true,
+        nameInput: action.payload
+      }
+
+    case EDIT_LIST:
+      const newList = [...state.allLists]
+      let selectedListIndex = newList.findIndex(x => x.selected === true)
+
+      newList[selectedListIndex] = {
+        ...newList[selectedListIndex],
+        name: state.nameInput
+      }
+
+      return {
+        ...state,
+        editMode: false,
+        allLists: [...newList]
       }
 
     case DELETE_LIST:
