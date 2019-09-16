@@ -16,7 +16,9 @@ import {
   HANDLE_ERROR,
   RESET_ERROR,
   SET_SELECTED_SNIPPET,
-  DELETE_SNIPPET
+  DELETE_SNIPPET,
+  EDIT_SNIPPET,
+  SET_EDIT_MODE
 } from './types'
 
 export const openListModal = () => ({
@@ -116,7 +118,42 @@ export const addNewSnippet = () => {
       dispatch(resetError())
     }
   }
-  
+}
+
+export const setEditMode = () => {
+  return (dispatch, getState) => {
+    const selectedSnip = {...getState().snippets.allSnippets.find(x => x.selected === true)}
+    dispatch({ type: SET_EDIT_MODE, payload: selectedSnip })
+    dispatch(setViewMode('edit'))
+  }
+}
+
+export const editSnippet = () => {
+  return (dispatch, getState) => {
+    const snippets = getState().snippets
+    const { parentId, codeInput, nameInput } = snippets
+    const selectedSnip = getState().snippets.allSnippets.find(x => x.selected === true)
+    const id = selectedSnip.createdAt
+
+    if (codeInput.trim() === '') {
+      return dispatch(handleError('Your snippet is empty'))
+    }
+
+    if (nameInput.trim() === '') {
+      return dispatch(handleError('Add a title for your snippet'))
+    }
+
+    if (parentId === '') {
+      return dispatch(handleError('Select a valid parent list'))
+    }
+
+    else {
+      dispatch({ type: EDIT_SNIPPET, payload: id })
+      dispatch(setViewMode('read'))
+      dispatch(resetSnippetInputs())
+      dispatch(resetError())
+    }
+  }
 }
 
 export const changeSnippetList = (id) => ({

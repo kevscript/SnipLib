@@ -10,7 +10,9 @@ import {
   HANDLE_ERROR,
   DELETE_LIST,
   RESET_ERROR,
-  DELETE_SNIPPET
+  DELETE_SNIPPET,
+  EDIT_SNIPPET,
+  SET_EDIT_MODE
 } from '../actions/types'
 
 const initialState = {
@@ -124,6 +126,22 @@ export default (state = initialState, action) => {
       return {
         ...state,
         allSnippets: [...newSnips]
+      }
+
+    case SET_EDIT_MODE:
+      return {
+        ...state,
+        nameInput: action.payload.name,
+        codeInput: action.payload.code,
+        parentId: action.payload.parentId
+      }
+
+    case EDIT_SNIPPET:
+      const newSnipps = [...state.allSnippets]
+      const selectedSnipp = newSnipps.find(x => x.selected === true)
+
+      return {
+        ...state
       }
 
     default:
