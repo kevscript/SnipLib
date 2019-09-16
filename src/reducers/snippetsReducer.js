@@ -138,10 +138,19 @@ export default (state = initialState, action) => {
 
     case EDIT_SNIPPET:
       const newSnipps = [...state.allSnippets]
-      const selectedSnipp = newSnipps.find(x => x.selected === true)
+      let selectedSnipIndex = newSnipps.findIndex(x => x.selected === true)
+      
+      newSnipps[selectedSnipIndex] = {
+        ...newSnipps[selectedSnipIndex],
+        name: state.nameInput,
+        syntax: state.syntax,
+        parentId: state.parentId,
+        code: state.codeInput
+      }
 
       return {
-        ...state
+        ...state,
+        allSnippets: [...newSnipps]
       }
 
     default:
