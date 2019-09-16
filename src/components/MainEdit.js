@@ -6,7 +6,7 @@ import {
   changeSnippetName,
   changeSnippetCode,
   changeSnippetList,
-  addNewSnippet,
+  editSnippet,
   setViewMode,
   resetSnippetInputs
 } from '../actions'
@@ -73,7 +73,7 @@ const EditorContainer = styled.div`
   margin: 25px;
 `
 
-const MainEdit = ({ selectedSnippet, snippets, lists, changeSnippetCode, changeSnippetName, changeSnippetList, addNewSnippet, resetSnippetInputs, setViewMode }) => {
+const MainEdit = ({ selectedSnippet, snippets, lists, changeSnippetCode, changeSnippetName, changeSnippetList, editSnippet, resetSnippetInputs, setViewMode }) => {
 
   const { allLists } = lists
   const { codeInput, syntaxInput, nameInput, parentId, error, allSnippets } = snippets
@@ -85,7 +85,7 @@ const MainEdit = ({ selectedSnippet, snippets, lists, changeSnippetCode, changeS
   }
 
   const handleAdd = () => {
-    addNewSnippet()
+    editSnippet()
     /*setViewMode('')
     resetSnippetInputs()*/
   }
@@ -118,7 +118,7 @@ const MainEdit = ({ selectedSnippet, snippets, lists, changeSnippetCode, changeS
 
           {
             allLists &&
-            <Select defaultValue={selectedSnippet.createdAt} onChange={handleListSelect}>
+            <Select value={parentId} onChange={handleListSelect}>
               {allLists.map(x => <option key={x.createdAt} value={x.createdAt}>{x.name}</option>)}
             </Select>
           }
@@ -145,7 +145,7 @@ const mapDispatchToProps = {
   changeSnippetName,
   changeSnippetCode,
   changeSnippetList,
-  addNewSnippet,
+  editSnippet,
   setViewMode,
   resetSnippetInputs
 }
