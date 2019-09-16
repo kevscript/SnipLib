@@ -109,6 +109,14 @@ const SnipsBar = ({ lists, snippets, setViewMode, deleteList, setSelectedSnippet
     }
   }
 
+  const handleSnippetSelection = (e) => {
+    const id = parseInt(e.target.getAttribute('data-id'))
+    setSelectedSnippet(id)
+    if (viewMode !== 'read') {
+      setViewMode('read')
+    }
+  }
+
   if (allLists.length === 0) {
     return (
       <Container>
@@ -159,8 +167,9 @@ const SnipsBar = ({ lists, snippets, setViewMode, deleteList, setSelectedSnippet
               return (
                 <SnipItem 
                   key={x.createdAt} 
+                  data-id={x.createdAt}
                   selected={x.selected}
-                  onClick={() => setSelectedSnippet(x.createdAt)}
+                  onClick={handleSnippetSelection}
                 >
                   {x.name}
                 </SnipItem>
