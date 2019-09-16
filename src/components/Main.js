@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 
 import MainCreate from './MainCreate'
 import MainRead from './MainRead'
+import MainEdit from './MainEdit'
 
 const Container = styled.div`
   flex-grow: 1;
@@ -39,6 +40,14 @@ const Main = ({ snippets }) => {
     return (
       <Container>
         <MainRead data={selectedSnippet} />
+      </Container>
+    )
+  }
+
+  if (viewMode === 'edit') {
+    return (
+      <Container>
+        <MainEdit selectedSnippet={selectedSnippet} />
       </Container>
     )
   }
