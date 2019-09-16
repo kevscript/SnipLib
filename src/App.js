@@ -4,7 +4,7 @@ import styled from 'styled-components'
 
 import GlobalStyle from './styles/global'
 import ListsBar from './components/ListsBar'
-import ListModal from './components/ListModal'
+import Modal from './components/Modal'
 import SnipsBar from './components/SnipsBar'
 import Main from './components/Main'
 
@@ -24,7 +24,7 @@ const App = ({ lists }) => {
       <ListsBar />
       <SnipsBar />
       <Main />
-      {modalOpen && <ListModal />}
+      {modalOpen && <Modal />}
     </Container>
   );
 }
