@@ -2,7 +2,7 @@ import {
   CHANGE_SNIPPET_NAME,
   CHANGE_SNIPPET_LIST,
   CHANGE_SNIPPET_CODE,
-  CHANGE_SNIPPET_SYNTAX,
+  CHANGE_SNIPPET_LANGUAGE,
   ADD_NEW_SNIPPET,
   SET_SELECTED_SNIPPET,
   SET_VIEW_MODE,
@@ -19,10 +19,11 @@ const initialState = {
   error: '',
   viewMode: '',
   nameInput: '',
-  syntaxInput: '',
+  languageInput: '',
   codeInput: '',
   parentId: '',
   allSnippets: [],
+  allLanguages: ['javascript', 'css', 'xml', 'markdown', 'php', 'python', 'ruby', 'clike']
 }
 
 export default (state = initialState, action) => {
@@ -52,10 +53,10 @@ export default (state = initialState, action) => {
         codeInput: action.payload
       }
 
-    case CHANGE_SNIPPET_SYNTAX:
+    case CHANGE_SNIPPET_LANGUAGE:
       return {
         ...state,
-        syntaxInput: action.payload
+        languageInput: action.payload
       }
 
     case ADD_NEW_SNIPPET:
@@ -69,7 +70,7 @@ export default (state = initialState, action) => {
           {
             selected: true,
             name: state.nameInput,
-            syntax: state.syntax,
+            language: state.languageInput,
             parentId: state.parentId,
             code: state.codeInput,
             createdAt: Date.now()
@@ -95,7 +96,7 @@ export default (state = initialState, action) => {
       return {
         ...state,
         nameInput: '',
-        syntaxInput: '',
+        languageInput: '',
         codeInput: '',
         parentId: '',
       }
@@ -133,6 +134,7 @@ export default (state = initialState, action) => {
         ...state,
         nameInput: action.payload.name,
         codeInput: action.payload.code,
+        languageInput: action.payload.language,
         parentId: action.payload.parentId
       }
 
@@ -145,6 +147,7 @@ export default (state = initialState, action) => {
         name: state.nameInput,
         syntax: state.syntax,
         parentId: state.parentId,
+        language: state.languageInput,
         code: state.codeInput
       }
 

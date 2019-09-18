@@ -9,7 +9,7 @@ import {
   SET_EDIT_LIST,
   SET_SELECTED_LIST,
   CHANGE_SNIPPET_NAME,
-  CHANGE_SNIPPET_SYNTAX,
+  CHANGE_SNIPPET_LANGUAGE,
   CHANGE_SNIPPET_CODE,
   SET_VIEW_MODE,
   ADD_NEW_SNIPPET,
@@ -23,6 +23,8 @@ import {
   SET_EDIT_MODE
 } from './types'
 
+
+// HANDLE LIST MODAL
 export const openListModal = () => ({
   type: OPEN_LIST_MODAL
 })
@@ -35,6 +37,17 @@ export const closeListModal = () => {
   }
 }
 
+export const changeListModalName = (value) => ({
+  type: CHANGE_LIST_MODAL_NAME,
+  payload: value
+})
+
+export const resetListModalName = () => ({
+  type: RESET_LIST_MODAL_NAME
+})
+
+
+// HANDLE LISTS
 export const setEditList = () => {
   return (dispatch, getState) => {
     const selectedList = {...getState().lists.allLists.find(x => x.selected === true)}
@@ -49,15 +62,6 @@ export const editList = () => {
     dispatch(closeListModal())
   }
 }
-
-export const changeListModalName = (value) => ({
-  type: CHANGE_LIST_MODAL_NAME,
-  payload: value
-})
-
-export const resetListModalName = () => ({
-  type: RESET_LIST_MODAL_NAME
-})
 
 export const addNewList = () => {
   return (dispatch, getState) => {
@@ -89,21 +93,11 @@ export const setSelectedList = (id) => ({
   payload: id
 })
 
-//////////////////////////////////////////////////////////////////
 
+// HANDLE SNIPPETS
 export const setSelectedSnippet = (id) => ({
   type: SET_SELECTED_SNIPPET,
   payload: id
-})
-
-export const changeSnippetName = (value) => ({
-  type: CHANGE_SNIPPET_NAME,
-  payload: value
-})
-
-export const changeSnippetCode = (value) => ({
-  type: CHANGE_SNIPPET_CODE,
-  payload: value
 })
 
 export const setViewMode = (value) => ({
@@ -114,7 +108,7 @@ export const setViewMode = (value) => ({
 export const addNewSnippet = () => {
   return (dispatch, getState) => {
     const snippets = getState().snippets
-    const { parentId, codeInput, nameInput } = snippets
+    const { parentId, codeInput, nameInput, languageInput } = snippets
 
     if (codeInput.trim() === '') {
       return dispatch(handleError('Your snippet is empty'))
@@ -126,6 +120,10 @@ export const addNewSnippet = () => {
 
     if (parentId === '') {
       return dispatch(handleError('Select a valid parent list'))
+    }
+
+    if (languageInput === '') {
+      return dispatch(handleError('Select a valid language syntax'))
     }
 
     else {
@@ -173,13 +171,30 @@ export const editSnippet = () => {
   }
 }
 
+export const deleteSnippet = () => ({
+  type: DELETE_SNIPPET
+})
+
+
+// HANDLE SNIPPET FORM
+export const changeSnippetName = (value) => ({
+  type: CHANGE_SNIPPET_NAME,
+  payload: value
+})
+
+export const changeSnippetCode = (value) => ({
+  type: CHANGE_SNIPPET_CODE,
+  payload: value
+})
+
+
 export const changeSnippetList = (id) => ({
   type: CHANGE_SNIPPET_LIST,
   payload: id
 })
 
-export const changeSnippetSyntax = (value) => ({
-  type: CHANGE_SNIPPET_SYNTAX,
+export const changeSnippetLanguage = (value) => ({
+  type: CHANGE_SNIPPET_LANGUAGE,
   payload: value
 })
 
@@ -187,6 +202,8 @@ export const resetSnippetInputs = () => ({
   type: RESET_SNIPPET_INPUTS
 })
 
+
+// HANDLE ERRORS
 export const handleError = (message) => ({
   type: HANDLE_ERROR,
   payload: message
@@ -194,8 +211,4 @@ export const handleError = (message) => ({
 
 export const resetError = () => ({
   type: RESET_ERROR
-})
-
-export const deleteSnippet = () => ({
-  type: DELETE_SNIPPET
 })
