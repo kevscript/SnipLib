@@ -6,6 +6,7 @@ import {
   changeSnippetName,
   changeSnippetCode,
   changeSnippetList,
+  changeSnippetLanguage,
   addNewSnippet,
   setViewMode,
   resetSnippetInputs
@@ -54,7 +55,7 @@ const SubHeader = styled.div`
 
 const Input = styled.input`
   flex-grow: 1;
-  margin-left: 20px;
+  margin: 0 20px;
   padding: 10px;
 `
 
@@ -73,21 +74,18 @@ const EditorContainer = styled.div`
   margin: 25px;
 `
 
-const MainCreate = ({ snippets, lists, changeSnippetCode, changeSnippetName, changeSnippetList, addNewSnippet, resetSnippetInputs, setViewMode }) => {
+const MainCreate = ({ snippets, lists, changeSnippetCode, changeSnippetName, changeSnippetList, changeSnippetLanguage, addNewSnippet, resetSnippetInputs, setViewMode }) => {
 
   const { allLists } = lists
-  const { codeInput, syntaxInput, nameInput, parentId, error } = snippets
+  const { codeInput, nameInput, error, allLanguages, languageInput } = snippets
 
   const options = {
     theme: 'material',
-    mode: 'javascript',
     lineNumbers: true
   }
 
   const handleAdd = () => {
     addNewSnippet()
-    /*setViewMode('')
-    resetSnippetInputs()*/
   }
 
   const handleCancel = () => {
@@ -98,6 +96,11 @@ const MainCreate = ({ snippets, lists, changeSnippetCode, changeSnippetName, cha
   const handleListSelect = (e) => {
     const value = e.target.value
     changeSnippetList(value)
+  }
+
+  const handleLangSelect = (e) => {
+    const value = e.target.value
+    changeSnippetLanguage(value)
   }
 
   return (
@@ -117,6 +120,16 @@ const MainCreate = ({ snippets, lists, changeSnippetCode, changeSnippetName, cha
         <SubHeader>
 
           {
+            allLanguages &&
+            <Select onChange={handleLangSelect}>
+              <option value="">Select language</option>
+              {allLanguages.map(x => <option key={`lang-${x}`} value={x}>{x}</option>)}
+            </Select>
+          }
+
+          <Input type="text" onChange={e => changeSnippetName(e.target.value)} placeholder="Enter a title for this snippet" value={nameInput} />
+
+          {
             allLists &&
             <Select onChange={handleListSelect}>
               <option value="">Select list</option>
@@ -124,12 +137,10 @@ const MainCreate = ({ snippets, lists, changeSnippetCode, changeSnippetName, cha
             </Select>
           }
 
-          <Input type="text" onChange={e => changeSnippetName(e.target.value)} placeholder="Enter a title for this snippet" value={nameInput} />
-
         </SubHeader>
 
         <EditorContainer>
-          <Editor handleChange={changeSnippetCode} value={codeInput} options={options}/>
+          <Editor handleChange={changeSnippetCode} value={codeInput} options={options} lang={languageInput}/>
         </EditorContainer>
 
       </div>
@@ -146,6 +157,7 @@ const mapDispatchToProps = {
   changeSnippetName,
   changeSnippetCode,
   changeSnippetList,
+  changeSnippetLanguage,
   addNewSnippet,
   setViewMode,
   resetSnippetInputs

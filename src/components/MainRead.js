@@ -70,7 +70,7 @@ const SubHeader = styled.div`
 const SubTitle = styled.h4`
   font-size: 16px;
   font-weight: 500;
-  margin-right: 15px;
+  margin-left: 15px;
 `
 
 const EditorContainer = styled.div`
@@ -78,11 +78,10 @@ const EditorContainer = styled.div`
 `
 
 const MainRead = ({ data, deleteSnippet, setEditMode }) => {
-  const { selected, name, syntax, parentId, code, createdAt } = data
+  const { name, language, code } = data
 
   const options = {
     theme: 'material',
-    mode: 'javascript',
     lineNumbers: true,
     readOnly: true
   }
@@ -108,11 +107,11 @@ const MainRead = ({ data, deleteSnippet, setEditMode }) => {
       </Header>
       <div>
         <SubHeader>
-          <SubTitle>Syntax:</SubTitle>
-          <p>Javascript</p>
+          <p>Language: </p>
+          <SubTitle>{language}</SubTitle>
         </SubHeader>
         <EditorContainer>
-          <Editor value={code} options={options} />
+          <Editor value={code} options={options} lang={language} />
         </EditorContainer>
       </div>
     </Container>
