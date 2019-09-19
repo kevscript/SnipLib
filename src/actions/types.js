@@ -26,3 +26,6 @@ export const SET_EDIT_MODE = 'SET_EDIT_MODE'
 // ACTIONS FOR ERRORS
 export const HANDLE_ERROR = 'HANDLE_ERROR'
 export const RESET_ERROR  = 'RESET_ERROR'
+
+// USER
+export const HANDLE_USER = 'HANDLE_USER'

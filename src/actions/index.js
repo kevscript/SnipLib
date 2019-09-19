@@ -20,7 +20,8 @@ import {
   SET_SELECTED_SNIPPET,
   DELETE_SNIPPET,
   EDIT_SNIPPET,
-  SET_EDIT_MODE
+  SET_EDIT_MODE,
+  HANDLE_USER
 } from './types'
 
 
@@ -211,4 +212,13 @@ export const handleError = (message) => ({
 
 export const resetError = () => ({
   type: RESET_ERROR
+})
+
+
+/////////////////////////////////////////////////////
+
+
+export const handleUser = (user) => ({
+  type: HANDLE_USER,
+  payload: user
 })
