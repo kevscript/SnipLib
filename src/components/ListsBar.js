@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import { connect } from 'react-redux'
 import { openListModal, setSelectedList } from '../actions'
 import ReactTooltip from 'react-tooltip'
+import firebase from 'firebase'
 
 import AddIcon from '../assets/addLight.svg'
 
@@ -59,11 +60,17 @@ const Icon = styled.img`
   height: 100%;
 `
 
-const ListBar = ({ lists, openListModal, setSelectedList }) => {
+const ListBar = ({ lists, user, openListModal, setSelectedList }) => {
   const { allLists } = lists
+  const { userInfo } = user
+  const handleLogOut = () => firebase.auth().signOut()
 
   return (
     <Container>
+      <div>
+      <span>{userInfo.displayName ? userInfo.displayName : 'noname'}</span>
+      <button onClick={handleLogOut}>Log Out</button>
+      </div>
       <Header>
         <Title>My Lists</Title>
         <IconContainer onClick={openListModal}>
@@ -87,7 +94,8 @@ const ListBar = ({ lists, openListModal, setSelectedList }) => {
 }
 
 const mapStateToProps = state => ({
-  lists: state.lists
+  lists: state.lists,
+  user: state.user
 })
 
 
