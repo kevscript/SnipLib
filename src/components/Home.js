@@ -5,7 +5,7 @@ import { handleUser } from '../actions'
 
 import firebase from 'firebase'
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth'
-import '../config/fire'
+import { userExistsInDatabase, addUserToDatabase } from '../config/fire'
 
 import ListsBar from './ListsBar'
 import Modal from './Modal'
@@ -38,11 +38,22 @@ const Home = ({ lists, user, handleUser }) => {
     }
   }
 
-  useEffect(() => {
-    firebase.auth().onAuthStateChanged(user => {
-        handleUser(user)
+  const authListener = () => {
+    firebase.auth().onAuthStateChanged(async user => {
+      if (user) {
+        const userExists = await userExistsInDatabase(user.uid)
+        if (userExists) {
+          console.log('user already exists')
+        } else {
+          addUserToDatabase(user)
+          console.log('added new user')
+        }
+      }
+      handleUser(user)
     })
-  }, [])
+  }
+
+  useEffect(() => { authListener() }, [])
 
   if (userInfo) {
     return (
