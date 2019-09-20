@@ -63,7 +63,9 @@ const Icon = styled.img`
 const ListBar = ({ lists, user, openListModal, setSelectedList }) => {
   const { allLists } = lists
   const { userInfo } = user
-  const handleLogOut = () => firebase.auth().signOut()
+  const handleLogOut = () => {
+    firebase.auth().signOut()
+  }
 
   return (
     <Container>
