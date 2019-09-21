@@ -9,7 +9,8 @@ import {
   HANDLE_ERROR,
   RESET_ERROR,
   EDIT_LIST,
-  SET_EDIT_LIST
+  SET_EDIT_LIST,
+  GET_DATA_SUCCESS
 } from '../actions/types'
 
 const initialState = {
@@ -22,6 +23,12 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
+
+    case GET_DATA_SUCCESS:
+      return {
+        ...state,
+        allLists: action.payload.lists
+      }
 
     case OPEN_LIST_MODAL:
       return {

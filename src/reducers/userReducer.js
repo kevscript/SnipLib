@@ -1,9 +1,14 @@
 import {
-  HANDLE_USER
+  HANDLE_USER,
+  PUSH_DATA_BEGIN,
+  PUSH_DATA_SUCCESS,
+  PUSH_DATA_ERROR
 } from '../actions/types'
 
 const initialState = {
-  userInfo: null
+  userInfo: null,
+  loading: false,
+  error: null
 }
 
 export default (state = initialState, action) => {
@@ -13,6 +18,25 @@ export default (state = initialState, action) => {
       return {
         ...state,
         userInfo: action.payload
+      }
+
+    case PUSH_DATA_BEGIN:
+      return {
+        ...state,
+        loading: true
+      }
+
+    case PUSH_DATA_SUCCESS:
+      return {
+        ...state,
+        loading: true
+      }
+
+    case PUSH_DATA_ERROR:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload
       }
 
     default:

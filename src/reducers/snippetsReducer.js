@@ -12,7 +12,8 @@ import {
   RESET_ERROR,
   DELETE_SNIPPET,
   EDIT_SNIPPET,
-  SET_EDIT_MODE
+  SET_EDIT_MODE,
+  GET_DATA_SUCCESS
 } from '../actions/types'
 
 const initialState = {
@@ -28,6 +29,12 @@ const initialState = {
 
 export default (state = initialState, action) => {
   switch (action.type) {
+
+    case GET_DATA_SUCCESS:
+      return {
+        ...state,
+        allSnippets: action.payload.snippets ? action.payload.snippets : []
+      }
 
     case SET_VIEW_MODE:
       return {
@@ -145,7 +152,6 @@ export default (state = initialState, action) => {
       newSnipps[selectedSnipIndex] = {
         ...newSnipps[selectedSnipIndex],
         name: state.nameInput,
-        syntax: state.syntax,
         parentId: state.parentId,
         language: state.languageInput,
         code: state.codeInput
