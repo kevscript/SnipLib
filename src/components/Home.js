@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
-import { handleUser } from '../actions'
+import { handleUser, pushData, getData } from '../actions'
 
 import firebase from 'firebase'
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth'
-import { userExistsInDatabase, addUserToDatabase } from '../config/fire'
+import { userExistsInDatabase } from '../config/fire'
 
 import ListsBar from './ListsBar'
 import Modal from './Modal'
@@ -19,7 +19,7 @@ const Container = styled.div`
   overflow: hidden;
 `
 
-const Home = ({ lists, user, handleUser }) => {
+const Home = ({ lists, user, snippets, handleUser, pushData, getData }) => {
   const { modalOpen } = lists
   const { userInfo } = user
 
@@ -40,16 +40,17 @@ const Home = ({ lists, user, handleUser }) => {
 
   const authListener = () => {
     firebase.auth().onAuthStateChanged(async user => {
+      handleUser(user)
       if (user) {
         const userExists = await userExistsInDatabase(user.uid)
         if (userExists) {
+          getData()
           console.log('user already exists')
         } else {
-          addUserToDatabase(user)
+          pushData()
           console.log('added new user')
         }
       }
-      handleUser(user)
     })
   }
 
@@ -76,11 +77,14 @@ const Home = ({ lists, user, handleUser }) => {
 
 const mapStateToProps = state => ({
   lists: state.lists,
-  user: state.user
+  user: state.user,
+  snippets: state.snippets
 })
 
 const mapDispatchToProps = {
-  handleUser
+  handleUser,
+  pushData,
+  getData
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home)

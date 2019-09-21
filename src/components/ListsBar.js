@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
-import { openListModal, setSelectedList } from '../actions'
+import { openListModal, setSelectedList, pushData } from '../actions'
 import ReactTooltip from 'react-tooltip'
 import firebase from 'firebase'
 
@@ -60,11 +60,13 @@ const Icon = styled.img`
   height: 100%;
 `
 
-const ListBar = ({ lists, user, openListModal, setSelectedList }) => {
+const ListBar = ({ lists, user, openListModal, setSelectedList, pushData }) => {
   const { allLists } = lists
   const { userInfo } = user
   const handleLogOut = () => {
+    pushData()
     firebase.auth().signOut()
+    console.log("log out")
   }
 
   return (
@@ -103,7 +105,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   openListModal,
-  setSelectedList
+  setSelectedList,
+  pushData
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ListBar)
