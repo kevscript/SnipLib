@@ -16,9 +16,12 @@ export const userExistsInDatabase = (id) => {
     .then(snap => snap.hasChild(id))
 }
 
-export const addUserToDatabase = (user) => {
-  firebase.database().ref('users/' + user.uid).set({
-    name: user.displayName,
-    email: user.email
+export const pushUserData = (user, data) => {
+  firebase.database().ref('users/' + user.uid).set({...data})
+}
+
+export const getUserData = (id) => {
+  firebase.database().ref('users/' + id).once("value", (snap) => {
+    snap.val()
   })
 }
