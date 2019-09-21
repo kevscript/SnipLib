@@ -1,3 +1,6 @@
+
+import firebase from 'firebase'
+
 import {
   OPEN_LIST_MODAL,
   CLOSE_LIST_MODAL,
@@ -21,8 +24,73 @@ import {
   DELETE_SNIPPET,
   EDIT_SNIPPET,
   SET_EDIT_MODE,
-  HANDLE_USER
+  HANDLE_USER,
+  PUSH_DATA_BEGIN,
+  PUSH_DATA_SUCCESS,
+  PUSH_DATA_ERROR,
+  GET_DATA_BEGIN,
+  GET_DATA_SUCCESS,
+  GET_DATA_ERROR
 } from './types'
+
+// HANDLE FIREBASE DATABASE
+export const handleUser = (user) => ({
+  type: HANDLE_USER,
+  payload: user
+})
+
+export const pushDataBegin = () => ({ type: PUSH_DATA_BEGIN })
+
+export const pushDataError = (error) => ({
+  type: PUSH_DATA_ERROR,
+  payload: error.message
+})
+
+export const pushDataSuccess = () => ({ type: PUSH_DATA_SUCCESS })
+
+export const pushData = () => {
+  return (dispatch, getState) => {
+    dispatch(pushDataBegin())
+    const lists = getState().lists.allLists
+    const snippets = getState().snippets.allSnippets
+    const userId = getState().user.userInfo.uid
+
+    firebase.database().ref('users/' + userId).set({lists, snippets})
+      .then(() => {
+        firebase.database().ref('users/' + userId).once('value', () => {
+          dispatch(pushDataSuccess())
+        }, error => {
+          dispatch(pushDataError(error))
+        })
+      })
+  }
+}
+
+export const getDataBegin = () => ({ type: GET_DATA_BEGIN })
+
+export const getDataError = (error) => ({
+  type: GET_DATA_ERROR,
+  payload: error.message
+})
+
+export const getDataSuccess = (data) => ({
+  type: GET_DATA_SUCCESS,
+  payload: data
+})
+
+export const getData = () => {
+  return (dispatch, getState) => {
+    dispatch(getDataBegin())
+    const userId = getState().user.userInfo.uid
+
+    firebase.database().ref('users/' + userId).once("value", snap => {
+      const values = snap.val()
+      dispatch(getDataSuccess(values))
+    }, error => {
+      dispatch(getDataError(error))
+    })
+  }
+}
 
 
 // HANDLE LIST MODAL
@@ -51,7 +119,7 @@ export const resetListModalName = () => ({
 // HANDLE LISTS
 export const setEditList = () => {
   return (dispatch, getState) => {
-    const selectedList = {...getState().lists.allLists.find(x => x.selected === true)}
+    const selectedList = { ...getState().lists.allLists.find(x => x.selected === true) }
     dispatch({ type: SET_EDIT_LIST, payload: selectedList.name })
     dispatch(openListModal())
   }
@@ -60,6 +128,7 @@ export const setEditList = () => {
 export const editList = () => {
   return (dispatch) => {
     dispatch({ type: EDIT_LIST })
+    dispatch(pushData())
     dispatch(closeListModal())
   }
 }
@@ -68,11 +137,12 @@ export const addNewList = () => {
   return (dispatch, getState) => {
     const nameInput = getState().lists.nameInput
 
-    if(nameInput.trim() === '') {
+    if (nameInput.trim() === '') {
       return dispatch(handleError('Name is empty or not valid'))
     }
 
-    dispatch({type: ADD_NEW_LIST})
+    dispatch({ type: ADD_NEW_LIST })
+    dispatch(pushData())
     dispatch(closeListModal())
   }
 }
@@ -82,10 +152,8 @@ export const deleteList = () => {
     const selectedList = getState().lists.allLists.find(x => x.selected === true)
     const listId = selectedList.createdAt
 
-    dispatch({
-      type: DELETE_LIST,
-      payload: listId
-    })
+    dispatch({ type: DELETE_LIST, payload: listId })
+    dispatch(pushData())
   }
 }
 
@@ -129,6 +197,7 @@ export const addNewSnippet = () => {
 
     else {
       dispatch({ type: ADD_NEW_SNIPPET })
+      dispatch(pushData())
       dispatch(setViewMode('read'))
       dispatch(resetSnippetInputs())
       dispatch(resetError())
@@ -138,7 +207,7 @@ export const addNewSnippet = () => {
 
 export const setEditMode = () => {
   return (dispatch, getState) => {
-    const selectedSnip = {...getState().snippets.allSnippets.find(x => x.selected === true)}
+    const selectedSnip = { ...getState().snippets.allSnippets.find(x => x.selected === true) }
     dispatch({ type: SET_EDIT_MODE, payload: selectedSnip })
     dispatch(setViewMode('edit'))
   }
@@ -165,6 +234,7 @@ export const editSnippet = () => {
 
     else {
       dispatch({ type: EDIT_SNIPPET, payload: id })
+      dispatch(pushData())
       dispatch(setViewMode('read'))
       dispatch(resetSnippetInputs())
       dispatch(resetError())
@@ -172,10 +242,12 @@ export const editSnippet = () => {
   }
 }
 
-export const deleteSnippet = () => ({
-  type: DELETE_SNIPPET
-})
-
+export const deleteSnippet = () => {
+  return (dispatch) => {
+    dispatch({ type: DELETE_SNIPPET })
+    dispatch(pushData())
+  }
+}
 
 // HANDLE SNIPPET FORM
 export const changeSnippetName = (value) => ({
@@ -187,7 +259,6 @@ export const changeSnippetCode = (value) => ({
   type: CHANGE_SNIPPET_CODE,
   payload: value
 })
-
 
 export const changeSnippetList = (id) => ({
   type: CHANGE_SNIPPET_LIST,
@@ -216,9 +287,3 @@ export const resetError = () => ({
 
 
 /////////////////////////////////////////////////////
-
-
-export const handleUser = (user) => ({
-  type: HANDLE_USER,
-  payload: user
-})
