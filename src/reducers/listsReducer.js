@@ -94,6 +94,9 @@ export default (state = initialState, action) => {
 
     case DELETE_LIST:
       const newLists = state.allLists.filter(x => x.selected !== true)
+      if (newLists.length === 1) {
+        newLists[0].selected = true
+      }
 
       return {
         ...state,

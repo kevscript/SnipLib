@@ -152,12 +152,20 @@ const SnipsBar = ({ lists, snippets, setViewMode, deleteList, setSelectedSnippet
               <TooltipText>Edit List</TooltipText>
             </ReactTooltip>
           </IconContainer>
-          <IconContainer onClick={deleteList}>
-            <Icon src={DeleteIcon} data-tip data-for="deleteList" />
-            <ReactTooltip id='deleteList' type='warning' place='bottom'>
-              <TooltipText dark>Delete List</TooltipText>
-            </ReactTooltip>
-          </IconContainer>
+          {
+            allLists.length > 1
+
+              ? (
+                <IconContainer onClick={deleteList}>
+                  <Icon src={DeleteIcon} data-tip data-for="deleteList" />
+                  <ReactTooltip id='deleteList' type='warning' place='bottom'>
+                    <TooltipText dark>Delete List</TooltipText>
+                  </ReactTooltip>
+                </IconContainer>
+              )
+
+              : null
+          }
         </ActionsContainer>
       </Header>
       <SnipsContainer>
