@@ -66,6 +66,7 @@ const ListBar = ({ lists, user, openListModal, setSelectedList, pushData }) => {
   const handleLogOut = () => {
     pushData()
     firebase.auth().signOut()
+    localStorage.removeItem('authUser');
     console.log("log out")
   }
 

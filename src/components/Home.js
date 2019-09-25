@@ -40,17 +40,23 @@ const Home = ({ lists, user, snippets, handleUser, pushData, getData }) => {
 
   const authListener = () => {
     firebase.auth().onAuthStateChanged(async user => {
+      localStorage.setItem('authUser', JSON.stringify(user));
       handleUser(user)
+      console.log('handling user')
       if (user) {
         const userExists = await userExistsInDatabase(user.uid)
+        console.log('user uid: ', user.uid || 'no user uid')
         if (userExists) {
           getData()
-          console.log('user already exists')
+          console.log('user exists in the database, get data')
         } else {
           pushData()
-          console.log('added new user')
+          console.log('no user loged, added new user')
         }
       }
+    }, () => {
+      localStorage.removeItem('authUser');
+      handleUser(null)
     })
   }
 

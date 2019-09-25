@@ -6,7 +6,7 @@ import {
 } from '../actions/types'
 
 const initialState = {
-  userInfo: null,
+  userInfo: JSON.parse(localStorage.getItem('authUser')),
   loading: false,
   error: null
 }
