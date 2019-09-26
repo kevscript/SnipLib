@@ -11,6 +11,7 @@ import ListsBar from './ListsBar'
 import Modal from './Modal'
 import SnipsBar from './SnipsBar'
 import Main from './Main'
+import ConfirmModal from './ConfirmModal'
 
 const Container = styled.div`
   width: 100%;
@@ -50,7 +51,11 @@ const Home = ({ lists, user, snippets, handleUser, pushData, getData }) => {
           getData()
           console.log('user exists in the database, get data')
         } else {
-          pushData()
+          firebase.database().ref('users/' + user.uid).set({
+            lists: [{ name: 'sandbox', createdAt: Date.now(), selected: true }], 
+            snippets: []
+          }, (err) => console.log(err))
+
           console.log('no user loged, added new user')
         }
       }
@@ -69,6 +74,8 @@ const Home = ({ lists, user, snippets, handleUser, pushData, getData }) => {
         <SnipsBar />
         <Main />
         {modalOpen && <Modal />}
+        {lists.confirmModalOpen && <ConfirmModal type="list"/>}
+        {snippets.confirmModalOpen && <ConfirmModal type="snippet"/>}
       </Container>
     )
   } else {
