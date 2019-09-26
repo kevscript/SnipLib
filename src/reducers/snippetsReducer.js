@@ -13,18 +13,21 @@ import {
   DELETE_SNIPPET,
   EDIT_SNIPPET,
   SET_EDIT_MODE,
-  GET_DATA_SUCCESS
+  GET_DATA_SUCCESS,
+  OPEN_CONFIRM_DELETE_SNIPPET_MODAL,
+  CLOSE_CONFIRM_DELETE_SNIPPET_MODAL
 } from '../actions/types'
 
 const initialState = {
   error: '',
-  viewMode: '',
+  viewMode: 'read',
   nameInput: '',
   languageInput: '',
   codeInput: '',
   parentId: '',
   allSnippets: [],
-  allLanguages: ['javascript', 'css', 'xml', 'markdown', 'php', 'python', 'ruby', 'clike']
+  allLanguages: ['javascript', 'css', 'xml', 'markdown', 'php', 'python', 'ruby', 'clike'],
+  confirmModalOpen: false
 }
 
 export default (state = initialState, action) => {
@@ -122,6 +125,10 @@ export default (state = initialState, action) => {
 
     case DELETE_LIST:
       const newSnippets = state.allSnippets.filter(x => x.parentId !== action.payload)
+      const newSelectedSnippet = newSnippets.find(x => x.selected === true)
+      if (!newSelectedSnippet && newSnippets.length > 0) {
+        newSnippets[0].selected = true
+      }
 
       return {
         ...state,
@@ -162,6 +169,12 @@ export default (state = initialState, action) => {
         allSnippets: [...newSnipps]
       }
 
+    case OPEN_CONFIRM_DELETE_SNIPPET_MODAL:
+      return { ...state, confirmModalOpen: true }
+
+    case CLOSE_CONFIRM_DELETE_SNIPPET_MODAL:
+      return { ...state, confirmModalOpen: false }
+    
     default:
       return state
   }

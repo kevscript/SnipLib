@@ -10,7 +10,9 @@ import {
   RESET_ERROR,
   EDIT_LIST,
   SET_EDIT_LIST,
-  GET_DATA_SUCCESS
+  GET_DATA_SUCCESS,
+  OPEN_CONFIRM_DELETE_LIST_MODAL,
+  CLOSE_CONFIRM_DELETE_LIST_MODAL,
 } from '../actions/types'
 
 const initialState = {
@@ -18,41 +20,27 @@ const initialState = {
   modalOpen: false,
   editMode: false,
   nameInput: '',
-  allLists: [{ name: 'sandbox', createdAt: Date.now(), selected: true }]
+  allLists: [],
+  confirmModalOpen: false
 }
 
 export default (state = initialState, action) => {
   switch (action.type) {
 
     case GET_DATA_SUCCESS:
-      return {
-        ...state,
-        allLists: action.payload.lists
-      }
+      return { ...state, allLists: action.payload.lists }
 
     case OPEN_LIST_MODAL:
-      return {
-        ...state,
-        modalOpen: true
-      }
+      return { ...state, modalOpen: true }
 
     case CLOSE_LIST_MODAL:
-      return {
-        ...state,
-        modalOpen: false
-      }
+      return { ...state, modalOpen: false }
 
     case CHANGE_LIST_MODAL_NAME:
-      return {
-        ...state,
-        nameInput: action.payload
-      }
+      return { ...state, nameInput: action.payload }
 
     case RESET_LIST_MODAL_NAME:
-      return {
-        ...state,
-        nameInput: initialState.nameInput
-      }
+      return { ...state, nameInput: initialState.nameInput }
 
     case ADD_NEW_LIST:
       const selected = state.allLists.findIndex(x => x.selected === true)
@@ -96,12 +84,11 @@ export default (state = initialState, action) => {
       const newLists = state.allLists.filter(x => x.selected !== true)
       if (newLists.length === 1) {
         newLists[0].selected = true
+      } else if (newLists.length > 1) {
+        newLists[1].selected = true
       }
 
-      return {
-        ...state,
-        allLists: [...newLists]
-      }
+      return { ...state, allLists: [...newLists] }
 
     case SET_SELECTED_LIST:
       const oldSelected = state.allLists.findIndex(x => x.selected === true)
@@ -109,21 +96,19 @@ export default (state = initialState, action) => {
       const newSelected = state.allLists.findIndex(x => x.createdAt === action.payload)
       state.allLists[newSelected] = { ...state.allLists[newSelected], selected: true }
 
-      return {
-        ...state
-      }
+      return { ...state }
 
     case HANDLE_ERROR:
-      return {
-        ...state,
-        error: action.payload
-      }
+      return { ...state, error: action.payload }
 
     case RESET_ERROR:
-      return {
-        ...state,
-        error: ''
-      }
+      return { ...state, error: '' }
+
+    case OPEN_CONFIRM_DELETE_LIST_MODAL:
+      return { ...state, confirmModalOpen: true }
+
+    case CLOSE_CONFIRM_DELETE_LIST_MODAL:
+      return { ...state, confirmModalOpen: false }
 
     default:
       return state
