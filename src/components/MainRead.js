@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import ReactTooltip from 'react-tooltip'
 import { connect } from 'react-redux'
 
-import { deleteSnippet, setEditMode } from '../actions'
+import { setEditMode, openConfirmDeleteSnippetModal } from '../actions'
 
 import EditIcon from '../assets/editDark.svg'
 import DeleteIcon from '../assets/deleteDark.svg'
@@ -77,7 +77,7 @@ const EditorContainer = styled.div`
   margin: 25px;
 `
 
-const MainRead = ({ data, deleteSnippet, setEditMode }) => {
+const MainRead = ({ data, openConfirmDeleteSnippetModal, setEditMode }) => {
   const { name, language, code } = data
 
   const options = {
@@ -97,7 +97,7 @@ const MainRead = ({ data, deleteSnippet, setEditMode }) => {
               <TooltipText>Edit Snippet</TooltipText>
             </ReactTooltip>
           </IconContainer>
-          <IconContainer onClick={deleteSnippet}>
+          <IconContainer onClick={openConfirmDeleteSnippetModal}>
             <Icon src={DeleteIcon} data-tip data-for="deleteSnippet" />
             <ReactTooltip id='deleteSnippet' type='warning'>
               <TooltipText dark>Delete Snippet</TooltipText>
@@ -119,7 +119,7 @@ const MainRead = ({ data, deleteSnippet, setEditMode }) => {
 }
 
 const mapDispatchToProps = {
-  deleteSnippet,
+  openConfirmDeleteSnippetModal,
   setEditMode
 }
 

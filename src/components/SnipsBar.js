@@ -5,9 +5,10 @@ import ReactTooltip from 'react-tooltip'
 
 import {
   setViewMode,
-  deleteList,
   setSelectedSnippet,
-  setEditList
+  setEditList,
+  openConfirmDeleteListModal,
+  setSelectedList
 } from '../actions'
 
 import AddIcon from '../assets/addDark.svg'
@@ -18,7 +19,7 @@ const Container = styled.div`
   min-height: 100vh;
   height: 100%;
   background: whitesmoke;
-  width: 350px;
+  width: 300px;
   border-right: 1px solid rgba(0,0,0,0.2);
 `
 
@@ -81,12 +82,13 @@ const TitleContainer = styled.div`
 
 const SnipItem = styled.li`
   width: 100%;
-  height: 40px;
   background: ${props => props.selected ? '#fff' : 'transparent'};
   display: flex;
   align-items: center;
-  padding-left: 25px;
+  padding: 15px;
+  font-size: 14px;
   cursor: pointer;
+  border-bottom: 1px solid rgba(0,0,0,0.1);
 `
 
 const Hint = styled.p`
@@ -97,12 +99,11 @@ const Hint = styled.p`
 `
 
 
-const SnipsBar = ({ lists, snippets, setViewMode, deleteList, setSelectedSnippet, setEditList }) => {
+const SnipsBar = ({ lists, snippets, setViewMode, deleteList, setSelectedSnippet, setSelectedList, setEditList, openConfirmDeleteListModal }) => {
 
   const { allLists } = lists
-  const selectedList = allLists.find(x => x.selected === true)
+  let selectedList = allLists.find(x => x.selected === true)
   const { viewMode, allSnippets } = snippets
-  const activeSnippets = allSnippets.filter(x => x.parentId === selectedList.createdAt)
 
   const handleAddClick = () => {
     if (viewMode !== 'create') {
@@ -128,7 +129,9 @@ const SnipsBar = ({ lists, snippets, setViewMode, deleteList, setSelectedSnippet
 
   if (!selectedList) {
     return (
-      <Container></Container>
+      <Container>
+        <Hint>Select a List or create a new one :)</Hint>
+      </Container>
     )
   }
 
@@ -137,7 +140,7 @@ const SnipsBar = ({ lists, snippets, setViewMode, deleteList, setSelectedSnippet
       <Header>
         <TitleContainer>
           <Title>{selectedList.name}</Title>
-          <span>{activeSnippets.length} snippets</span>
+          <span>{allSnippets.filter(x => x.parentId === selectedList.createdAt).length} snippets</span>
         </TitleContainer>
         <ActionsContainer>
           <IconContainer onClick={handleAddClick}>
@@ -156,7 +159,7 @@ const SnipsBar = ({ lists, snippets, setViewMode, deleteList, setSelectedSnippet
             allLists.length > 1
 
               ? (
-                <IconContainer onClick={deleteList}>
+                <IconContainer onClick={openConfirmDeleteListModal}>
                   <Icon src={DeleteIcon} data-tip data-for="deleteList" />
                   <ReactTooltip id='deleteList' type='warning' place='bottom'>
                     <TooltipText dark>Delete List</TooltipText>
@@ -170,12 +173,12 @@ const SnipsBar = ({ lists, snippets, setViewMode, deleteList, setSelectedSnippet
       </Header>
       <SnipsContainer>
         {
-          activeSnippets.length > 0
+          allSnippets.filter(x => x.parentId === selectedList.createdAt).length > 0
 
-            ? activeSnippets.map(x => {
+            ? allSnippets.filter(x => x.parentId === selectedList.createdAt).map(x => {
               return (
-                <SnipItem 
-                  key={x.createdAt} 
+                <SnipItem
+                  key={x.createdAt}
                   data-id={x.createdAt}
                   selected={x.selected}
                   onClick={handleSnippetSelection}
@@ -201,9 +204,10 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   setViewMode,
-  deleteList,
+  openConfirmDeleteListModal,
   setSelectedSnippet,
-  setEditList
+  setEditList,
+  setSelectedList
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SnipsBar)
