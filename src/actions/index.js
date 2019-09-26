@@ -30,8 +30,21 @@ import {
   PUSH_DATA_ERROR,
   GET_DATA_BEGIN,
   GET_DATA_SUCCESS,
-  GET_DATA_ERROR
+  GET_DATA_ERROR,
+  OPEN_CONFIRM_DELETE_LIST_MODAL,
+  OPEN_CONFIRM_DELETE_SNIPPET_MODAL,
+  CLOSE_CONFIRM_DELETE_LIST_MODAL,
+  CLOSE_CONFIRM_DELETE_SNIPPET_MODAL
 } from './types'
+
+// HANDLE HELPER MODALS
+export const openConfirmDeleteListModal = () => ({ type: OPEN_CONFIRM_DELETE_LIST_MODAL })
+export const closeConfirmDeleteListModal = () => ({ type: CLOSE_CONFIRM_DELETE_LIST_MODAL })
+
+export const openConfirmDeleteSnippetModal = () => ({ type: OPEN_CONFIRM_DELETE_SNIPPET_MODAL })
+export const closeConfirmDeleteSnippetModal = () => ({ type: CLOSE_CONFIRM_DELETE_SNIPPET_MODAL })
+
+
 
 // HANDLE FIREBASE DATABASE
 export const handleUser = (user) => ({
@@ -149,9 +162,9 @@ export const addNewList = () => {
 
 export const deleteList = () => {
   return (dispatch, getState) => {
-    const selectedList = getState().lists.allLists.find(x => x.selected === true)
+    const lists = getState().lists
+    const selectedList = lists.allLists.find(x => x.selected === true)
     const listId = selectedList.createdAt
-
     dispatch({ type: DELETE_LIST, payload: listId })
     dispatch(pushData())
   }
