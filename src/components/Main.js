@@ -7,7 +7,7 @@ import MainRead from './MainRead'
 import MainEdit from './MainEdit'
 
 const Container = styled.div`
-  flex-grow: 1;
+  width: calc(100% - 600px);
 `
 
 const Empty = styled.div`

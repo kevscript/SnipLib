@@ -20,7 +20,7 @@ const Container = styled.div`
 const Button = styled.button`
   position: absolute;
   top: 5px;
-  right: 5px;
+  right: 25px;
   z-index: 999;
   cursor: pointer;
   outline: 0;
@@ -36,6 +36,10 @@ const Button = styled.button`
   }
 `
 
+const StyledMirror = styled(CodeMirror)`
+  width: 100%;
+`
+
 const Editor = ({ handleChange, value = 'write code here', options, lang, snippets }) => {
 
   const { viewMode } = snippets
@@ -46,7 +50,7 @@ const Editor = ({ handleChange, value = 'write code here', options, lang, snippe
 
   return (
     <Container>
-      <CodeMirror
+      <StyledMirror
         value={value}
         options={{ ...options, mode: lang }}
         onBeforeChange={(editor, data, val) => {
