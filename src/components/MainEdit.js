@@ -65,8 +65,24 @@ const Select = styled.select`
 `
 
 const Button = styled.button`
+  cursor: pointer;
+  display: inline-block;
+  padding: 0.5em 1em;
+  text-decoration: none;
+  background: #4E525A;/*Button Color*/
+  color: #FFF;
+  border: 0;
+  border-radius: 3px;
+  outline: 0;
+  transition: all 0.2s ease-in-out;
+
   &:not(:last-child) {
     margin-right: 20px;
+  }
+
+  &:hover {
+    transform: translateY(-2px);
+    transition: all 0.2s ease-in-out;
   }
 `
 

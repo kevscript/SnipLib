@@ -1,9 +1,13 @@
 import React from 'react'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
+
+import firebase from 'firebase/app'
+import 'firebase/auth'
+
 import { openListModal, setSelectedList, pushData } from '../actions'
 import ReactTooltip from 'react-tooltip'
-import firebase from 'firebase'
+
 
 import AddIcon from '../assets/addLight.svg'
 
@@ -16,7 +20,7 @@ const Container = styled.div`
   color: #f4f4f4;
 `
 
-const Header = styled.div`
+const TitleBar = styled.div`
   display: flex;
   width: 275px;
   padding-right: 25px;
@@ -55,10 +59,58 @@ const IconContainer = styled.div`
   align-items: center;
 `
 
+const PhotoContainer = styled.div`
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: auto;
+  width: 25px;
+  height: 25px;
+  background: #f4f4f4;
+  border: 1px solid #59ff00;
+  margin-right: 5px;
+`
+
 const Icon = styled.img`
   display: block;
   width: auto;
   height: 100%;
+`
+
+const Header = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`
+
+const Profile = styled.div`
+  display: flex;
+  align-items: center;
+`
+
+const ProfileName = styled.span`
+  font-size: 16px;
+  font-weight: 500;
+`
+
+const Button = styled.button`
+  cursor: pointer;
+  margin-right: 25px;
+  display: inline-block;
+  padding: 0.5em 1em;
+  text-decoration: none;
+  background: #4E525A;/*Button Color*/
+  color: #FFF;
+  border: 0;
+  border-radius: 3px;
+  outline: 0;
+  transition: all 0.2s ease-in-out;
+  
+  &:hover {
+    transform: translateY(-2px);
+    transition: all 0.2s ease-in-out;
+  }
 `
 
 const ListBar = ({ lists, user, openListModal, setSelectedList, pushData }) => {
@@ -73,17 +125,22 @@ const ListBar = ({ lists, user, openListModal, setSelectedList, pushData }) => {
 
   return (
     <Container>
-      <div>
-      <span>{userInfo.displayName ? userInfo.displayName : 'noname'}</span>
-      <button onClick={handleLogOut}>Log Out</button>
-      </div>
       <Header>
+        <Profile>
+          <PhotoContainer>
+            <Icon src={userInfo.photoURL} alt="profile avatar"/>
+          </PhotoContainer>
+          <ProfileName>{userInfo.displayName ? userInfo.displayName : 'noname'}</ProfileName>
+        </Profile>
+        <Button onClick={handleLogOut}>Log Out</Button>
+      </Header>
+      <TitleBar>
         <Title>My Lists</Title>
         <IconContainer onClick={openListModal}>
           <Icon src={AddIcon} data-tip="Create List"/>
           <ReactTooltip place="bottom" type="dark" effect="solid"/>
         </IconContainer>
-      </Header>
+      </TitleBar>
       <ListsContainer>
         <Lists>
           {allLists.length > 0 && allLists.map(el => {
