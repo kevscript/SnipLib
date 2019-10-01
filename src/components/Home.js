@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
-import { handleUser, getData } from '../actions'
+import { handleUser, getData, pushDataError } from '../actions'
 
 import firebase from 'firebase/app'
 import 'firebase/database'
@@ -23,7 +23,7 @@ const Container = styled.div`
   overflow: hidden;
 `
 
-const Home = ({ lists, user, snippets, handleUser, getData }) => {
+const Home = ({ lists, user, snippets, handleUser, getData, pushDataError }) => {
   const { modalOpen } = lists
   const { userInfo } = user
 
@@ -40,12 +40,19 @@ const Home = ({ lists, user, snippets, handleUser, getData }) => {
           getData()
           console.log('user exists in the database, get data')
         } else {
+          console.log('user doesnt exist, setting new user data object in db')
           firebase.database().ref('users/' + user.uid).set({
             lists: [{ name: 'sandbox', createdAt: Date.now(), selected: true }], 
             snippets: []
-          }, (err) => console.log(err))
-
-          console.log('no user loged, added new user')
+          }, (err) => {
+            if (err) {
+              pushDataError(err)
+              console.log('error', err)
+            } else {
+              console.log('user data set successfully, getting his data...')
+              getData()
+            }
+          })
         }
       }
     }, () => {
@@ -82,7 +89,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   handleUser,
-  getData
+  getData,
+  pushDataError
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home)
