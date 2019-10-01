@@ -11,6 +11,7 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  background: whitesmoke;
 `
 
 const Title = styled.h1`
@@ -27,6 +28,7 @@ const Login = () => {
     signInSuccessUrl: '/',
     // We will display Github as auth providers.
     signInOptions: [
+      firebase.auth.GoogleAuthProvider.PROVIDER_ID,
       firebase.auth.GithubAuthProvider.PROVIDER_ID
     ],
     callbacks: {
