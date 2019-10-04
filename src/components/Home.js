@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
-import { handleUser, getData, pushDataError } from '../actions'
+import { handleUser, getData, pushDataError, initUi } from '../actions'
 
 import firebase from 'firebase/app'
 import 'firebase/database'
@@ -23,7 +23,7 @@ const Container = styled.div`
   overflow: hidden;
 `
 
-const Home = ({ lists, user, snippets, handleUser, getData, pushDataError }) => {
+const Home = ({ lists, user, snippets, handleUser, getData, pushDataError, initUi }) => {
   const { modalOpen } = lists
   const { userInfo } = user
 
@@ -90,7 +90,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   handleUser,
   getData,
-  pushDataError
+  pushDataError,
+  initUi
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home)

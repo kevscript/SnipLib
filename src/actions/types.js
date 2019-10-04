@@ -41,3 +41,6 @@ export const PUSH_DATA_ERROR = 'PUSH_DATA_ERROR'
 export const GET_DATA_BEGIN = 'GET_DATA_BEGIN'
 export const GET_DATA_SUCCESS = 'GET_DATA_SUCCESS'
 export const GET_DATA_ERROR = 'GET_DATA_ERROR'
+
+// UI INIT
+export const INIT_UI = 'INIT_UI'

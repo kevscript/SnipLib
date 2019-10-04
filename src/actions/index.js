@@ -35,7 +35,8 @@ import {
   OPEN_CONFIRM_DELETE_LIST_MODAL,
   OPEN_CONFIRM_DELETE_SNIPPET_MODAL,
   CLOSE_CONFIRM_DELETE_LIST_MODAL,
-  CLOSE_CONFIRM_DELETE_SNIPPET_MODAL
+  CLOSE_CONFIRM_DELETE_SNIPPET_MODAL,
+  INIT_UI
 } from './types'
 
 // HANDLE HELPER MODALS
@@ -44,7 +45,6 @@ export const closeConfirmDeleteListModal = () => ({ type: CLOSE_CONFIRM_DELETE_L
 
 export const openConfirmDeleteSnippetModal = () => ({ type: OPEN_CONFIRM_DELETE_SNIPPET_MODAL })
 export const closeConfirmDeleteSnippetModal = () => ({ type: CLOSE_CONFIRM_DELETE_SNIPPET_MODAL })
-
 
 
 // HANDLE FIREBASE DATABASE
@@ -100,9 +100,28 @@ export const getData = () => {
     firebase.database().ref('users/' + userId).once("value", snap => {
       const values = snap.val()
       dispatch(getDataSuccess(values))
+      // sets the UI logic based on data
+      dispatch(initUi())
     }, error => {
       dispatch(getDataError(error))
     })
+  }
+}
+
+// INIT UI
+export const initUi = () => {
+  return (dispatch, getState) => {
+    const allSnips = getState().snippets.allSnippets
+    if (allSnips.length > 0) {
+      const selectedSnip = allSnips.find(x => x.selected === true)
+      if (selectedSnip) {
+        dispatch(setSelectedList(selectedSnip.parentId))
+      } else {
+        console.log('initUi: no selected snippet')
+      }
+    } else {
+      console.log('initUi: no snippets')
+    }
   }
 }
 
