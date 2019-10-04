@@ -42,7 +42,7 @@ const Lists = styled.ul`
 
 const Item = styled.li`
   cursor: pointer;
-  background: ${props => props.selected ? '#00adb5' : 'transparent'};
+  background: ${props => props.isSelected ? '#00adb5' : 'transparent'};
   border-radius: 3px 0 0 3px;
   padding: 4px 0px 4px 25px;
   margin: 2px 0;
@@ -123,6 +123,12 @@ const ListBar = ({ lists, user, openListModal, setSelectedList, pushData }) => {
     console.log("log out")
   }
 
+  const handleListSelection = (e) => {
+    if (e.target.getAttribute('data-selected') === 'false') {
+      setSelectedList(parseInt(e.target.getAttribute('data-id')))
+    }
+  }
+
   return (
     <Container>
       <Header>
@@ -145,7 +151,8 @@ const ListBar = ({ lists, user, openListModal, setSelectedList, pushData }) => {
         <Lists>
           {allLists.length > 0 && allLists.map(el => {
             return (
-              <Item key={el.createdAt} selected={el.selected} id={el.createdAt} onClick={() => setSelectedList(el.createdAt)}>
+              <Item key={el.createdAt} isSelected={el.selected} data-selected={el.selected}
+              data-id={el.createdAt} onClick={handleListSelection}>
                 {el.name}
               </Item>
             )
