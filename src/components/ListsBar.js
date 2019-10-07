@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import firebase from 'firebase/app'
 import 'firebase/auth'
 
-import { openListModal, setSelectedList, pushData } from '../actions'
+import { openListModal, setSelectedList } from '../actions'
 import ReactTooltip from 'react-tooltip'
 
 
@@ -113,14 +113,16 @@ const Button = styled.button`
   }
 `
 
-const ListBar = ({ lists, user, openListModal, setSelectedList, pushData }) => {
+const ListBar = ({ lists, user, openListModal, setSelectedList }) => {
   const { allLists } = lists
   const { userInfo } = user
   const handleLogOut = () => {
-    pushData()
     firebase.auth().signOut()
-    localStorage.removeItem('authUser');
-    console.log("log out")
+      .then(() => {
+        localStorage.removeItem('authUser')
+        console.log('user logged out')
+      })
+      .catch(err => console.log(err.message))
   }
 
   const handleListSelection = (e) => {
@@ -172,7 +174,6 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   openListModal,
   setSelectedList,
-  pushData
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ListBar)
