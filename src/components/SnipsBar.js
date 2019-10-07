@@ -82,7 +82,7 @@ const TitleContainer = styled.div`
 
 const SnipItem = styled.li`
   width: 100%;
-  background: ${props => props.selected ? '#fff' : 'transparent'};
+  background: ${props => props.isSelected ? '#fff' : 'transparent'};
   display: flex;
   align-items: center;
   padding: 15px;
@@ -112,10 +112,12 @@ const SnipsBar = ({ lists, snippets, setViewMode, deleteList, setSelectedSnippet
   }
 
   const handleSnippetSelection = (e) => {
-    const id = parseInt(e.target.getAttribute('data-id'))
-    setSelectedSnippet(id)
-    if (viewMode !== 'read') {
-      setViewMode('read')
+    if (e.target.getAttribute('data-selected') === 'false') {
+      const id = parseInt(e.target.getAttribute('data-id'))
+      setSelectedSnippet(id)
+      if (viewMode !== 'read') {
+        setViewMode('read')
+      }
     }
   }
 
@@ -180,7 +182,8 @@ const SnipsBar = ({ lists, snippets, setViewMode, deleteList, setSelectedSnippet
                 <SnipItem
                   key={x.createdAt}
                   data-id={x.createdAt}
-                  selected={x.selected}
+                  data-selected={x.selected}
+                  isSelected={x.selected}
                   onClick={handleSnippetSelection}
                 >
                   {x.name}
