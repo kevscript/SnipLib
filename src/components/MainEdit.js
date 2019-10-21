@@ -13,6 +13,7 @@ import {
 } from '../actions'
 
 import Editor from './Editor'
+import Button from './Button'
 
 const Container = styled.div`
   flex-grow: 1;
@@ -64,25 +65,9 @@ const Select = styled.select`
   padding: 10px;
 `
 
-const Button = styled.button`
-  cursor: pointer;
-  display: inline-block;
-  padding: 0.5em 1em;
-  text-decoration: none;
-  background: #4E525A;/*Button Color*/
-  color: #FFF;
-  border: 0;
-  border-radius: 3px;
-  outline: 0;
-  transition: all 0.2s ease-in-out;
-
+const StyledButton = styled(Button)`
   &:not(:last-child) {
     margin-right: 20px;
-  }
-
-  &:hover {
-    transform: translateY(-2px);
-    transition: all 0.2s ease-in-out;
   }
 `
 
@@ -112,7 +97,7 @@ const MainEdit = ({ selectedSnippet, snippets, lists, changeSnippetCode, changeS
   }
 
   const handleCancel = () => {
-    setViewMode('')
+    setViewMode('read')
     resetSnippetInputs()
   }
 
@@ -134,8 +119,8 @@ const MainEdit = ({ selectedSnippet, snippets, lists, changeSnippetCode, changeS
           : <Title>{selectedSnippet ? selectedSnippet.name : 'Title'}</Title>
         }
         <ActionsContainer>
-          <Button onClick={handleCancel}>cancel</Button>
-          <Button onClick={handleAdd}>save</Button>
+          <StyledButton handleOnClick={handleCancel}>Cancel</StyledButton>
+          <StyledButton handleOnClick={handleAdd}>Save</StyledButton>
         </ActionsContainer>
       </Header>
       <div>

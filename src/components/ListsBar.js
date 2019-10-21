@@ -8,6 +8,7 @@ import 'firebase/auth'
 import { openListModal, setSelectedList } from '../actions'
 import ReactTooltip from 'react-tooltip'
 
+import Button from './Button'
 
 import AddIcon from '../assets/addLight.svg'
 
@@ -94,25 +95,6 @@ const ProfileName = styled.span`
   font-weight: 500;
 `
 
-const Button = styled.button`
-  cursor: pointer;
-  margin-right: 25px;
-  display: inline-block;
-  padding: 0.5em 1em;
-  text-decoration: none;
-  background: #4E525A;/*Button Color*/
-  color: #FFF;
-  border: 0;
-  border-radius: 3px;
-  outline: 0;
-  transition: all 0.2s ease-in-out;
-  
-  &:hover {
-    transform: translateY(-2px);
-    transition: all 0.2s ease-in-out;
-  }
-`
-
 const ListBar = ({ lists, user, openListModal, setSelectedList }) => {
   const { allLists } = lists
   const { userInfo } = user
@@ -131,6 +113,10 @@ const ListBar = ({ lists, user, openListModal, setSelectedList }) => {
     }
   }
 
+  const handleOpenListModal = () => {
+    openListModal()
+  }
+
   return (
     <Container>
       <Header>
@@ -140,11 +126,11 @@ const ListBar = ({ lists, user, openListModal, setSelectedList }) => {
           </PhotoContainer>
           <ProfileName>{userInfo.displayName ? userInfo.displayName : 'noname'}</ProfileName>
         </Profile>
-        <Button onClick={handleLogOut}>Log Out</Button>
+        <Button handleClick={handleLogOut}>Log Out</Button>
       </Header>
       <TitleBar>
         <Title>My Lists</Title>
-        <IconContainer onClick={openListModal}>
+        <IconContainer onClick={handleOpenListModal}>
           <Icon src={AddIcon} data-tip="Create List"/>
           <ReactTooltip place="bottom" type="dark" effect="solid"/>
         </IconContainer>

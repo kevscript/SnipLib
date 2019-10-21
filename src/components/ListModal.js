@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
 import { closeListModal, changeListModalName, addNewList, resetListModalName } from '../actions'
+import Button from './Button'
 
 const Modal = styled.div`
   position: relative;
@@ -31,7 +32,7 @@ const ModalSection = styled.div`
 
 const ButtonsContainer = styled.div``
 
-const Button = styled.button`
+const StyledButton = styled(Button)`
   &:not(:last-child) {
     margin-right: 15px;
   }
@@ -73,8 +74,8 @@ const ListModal = ({ lists, closeListModal, changeListModalName, addNewList, res
           placeholder="Enter a name for your list"
         />
         <ButtonsContainer>
-          <Button onClick={addNewList}>Create</Button>
-          <Button onClick={handleCancelation}>Cancel</Button>
+          <StyledButton handleOnClick={addNewList}>Create</StyledButton>
+          <StyledButton handleOnClick={handleCancelation}>Cancel</StyledButton>
         </ButtonsContainer>
       </ModalSection>
       { error && 

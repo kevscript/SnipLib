@@ -13,6 +13,7 @@ import {
 } from '../actions'
 
 import Editor from './Editor'
+import Button from './Button'
 
 const Container = styled.div`
   flex-grow: 1;
@@ -64,7 +65,7 @@ const Select = styled.select`
   padding: 10px;
 `
 
-const Button = styled.button`
+const StyledButton = styled(Button)`
   &:not(:last-child) {
     margin-right: 20px;
   }
@@ -89,7 +90,7 @@ const MainCreate = ({ snippets, lists, changeSnippetCode, changeSnippetName, cha
   }
 
   const handleCancel = () => {
-    setViewMode('')
+    setViewMode('read')
     resetSnippetInputs()
   }
 
@@ -111,8 +112,8 @@ const MainCreate = ({ snippets, lists, changeSnippetCode, changeSnippetName, cha
           : <Title>New Snippet</Title>
         }
         <ActionsContainer>
-          <Button onClick={handleCancel}>cancel</Button>
-          <Button onClick={handleAdd}>save</Button>
+          <StyledButton handleOnClick={handleCancel}>Cancel</StyledButton>
+          <StyledButton handleOnClick={handleAdd}>Save</StyledButton>
         </ActionsContainer>
       </Header>
       <div>

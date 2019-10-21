@@ -35,7 +35,6 @@ const Home = ({ lists, user, snippets, handleUser, getData, pushDataError, initU
       console.log('handling user')
       if (user) {
         const userExists = await userExistsInDatabase(user.uid)
-        console.log('user uid: ', user.uid || 'no user uid')
         if (userExists) {
           getData()
           console.log('user exists in the database, get data')

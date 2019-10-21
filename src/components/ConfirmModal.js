@@ -11,6 +11,7 @@ import {
   setSelectedList,
   setSelectedSnippet
 } from '../actions'
+import Button from './Button'
 
 const Container = styled.div`
   position: absolute;
@@ -50,26 +51,9 @@ const ButtonsContainer = styled.div`
   margin: 10px 0 0;
 `
 
-const Button = styled.button`
-  cursor: pointer;
-  margin-right: 25px;
-  display: inline-block;
-  padding: 0.5em 1em;
-  text-decoration: none;
-  background: #4E525A;/*Button Color*/
-  color: #FFF;
-  border: 0;
-  border-radius: 3px;
-  outline: 0;
-  transition: all 0.2s ease-in-out;
-
+const StyledButton = styled(Button)`
   &:not(:last-child) {
     margin-right: 15px;
-  }
-  
-  &:hover {
-    transform: translateY(-2px);
-    transition: all 0.2s ease-in-out;
   }
 `
 
@@ -117,8 +101,8 @@ const ConfirmModal = ({ type, snippets, lists, closeConfirmDeleteListModal, clos
             }
           </div>
           <ButtonsContainer>
-            <Button onClick={handleDelete}>Delete</Button>
-            <Button onClick={handleCancel}>Cancel</Button>
+            <StyledButton handleOnClick={handleCancel}>Cancel</StyledButton>
+            <StyledButton handleOnClick={handleDelete}>Delete</StyledButton>
           </ButtonsContainer>
         </ModalSection>
       </Modal>
