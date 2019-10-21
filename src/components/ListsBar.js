@@ -126,7 +126,7 @@ const ListBar = ({ lists, user, openListModal, setSelectedList }) => {
           </PhotoContainer>
           <ProfileName>{userInfo.displayName ? userInfo.displayName : 'noname'}</ProfileName>
         </Profile>
-        <Button handleClick={handleLogOut}>Log Out</Button>
+        <Button handleOnClick={handleLogOut}>Log Out</Button>
       </Header>
       <TitleBar>
         <Title>My Lists</Title>
