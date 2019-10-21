@@ -1,0 +1,31 @@
+import React from 'react';
+import styled from 'styled-components'
+
+const TheButton = styled.button`
+  cursor: pointer;
+  margin-right: 25px;
+  display: inline-block;
+  padding: 0.5em 1em;
+  text-decoration: none;
+  background: #4E525A;/*Button Color*/
+  color: #FFF;
+  border: 0;
+  border-radius: 3px;
+  outline: 0;
+  transition: all 0.2s ease-in-out;
+  
+  &:hover {
+    transform: translateY(-2px);
+    transition: all 0.2s ease-in-out;
+  }
+`
+
+const Button = ({children, handleOnClick}) => {
+  return (
+    <TheButton onClick={handleOnClick}>
+      {children}
+    </TheButton>
+  )
+}
+
+export default Button;
