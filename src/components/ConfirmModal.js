@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
-import { 
+import {
   openConfirmDeleteListModal,
   closeConfirmDeleteListModal,
   openConfirmDeleteSnippetModal,
@@ -46,15 +46,44 @@ const ModalSection = styled.div`
 
 `
 
-const ButtonsContainer = styled.div``
+const ButtonsContainer = styled.div`
+  margin: 10px 0 0;
+`
 
 const Button = styled.button`
+  cursor: pointer;
+  margin-right: 25px;
+  display: inline-block;
+  padding: 0.5em 1em;
+  text-decoration: none;
+  background: #4E525A;/*Button Color*/
+  color: #FFF;
+  border: 0;
+  border-radius: 3px;
+  outline: 0;
+  transition: all 0.2s ease-in-out;
+
   &:not(:last-child) {
     margin-right: 15px;
   }
+  
+  &:hover {
+    transform: translateY(-2px);
+    transition: all 0.2s ease-in-out;
+  }
 `
 
-const ConfirmModal = ({ type, snippets, lists, closeConfirmDeleteListModal, closeConfirmDeleteSnippetModal, deleteList, deleteSnippet, setSelectedSnippet, setSelectedList}) => {
+const ModalText = styled.p`
+  text-align: center;
+`
+
+const ModalSnippetName = styled.span`
+  font-size: inherit;
+  font-weight: 500;
+  color: #00adb5;
+`
+
+const ConfirmModal = ({ type, snippets, lists, closeConfirmDeleteListModal, closeConfirmDeleteSnippetModal, deleteList, deleteSnippet, setSelectedSnippet, setSelectedList }) => {
 
   const selectedSnippet = snippets.allSnippets.find(x => x.selected === true)
   const selectedList = lists.allLists.find(x => x.selected === true)
@@ -83,8 +112,8 @@ const ConfirmModal = ({ type, snippets, lists, closeConfirmDeleteListModal, clos
         <ModalSection>
           <div>
             {type === 'list'
-              ? <p>Are you sure you want to permanently delete '{selectedList.name}' list ?</p>
-              : <p>Are you sure you want to permanently delete '{selectedSnippet.name}' snippet ?</p>
+              ? <ModalText>Are you sure you want to permanently delete <ModalSnippetName>'{selectedList.name}'</ModalSnippetName> list ?</ModalText>
+              : <ModalText>Are you sure you want to permanently delete <ModalSnippetName>'{selectedSnippet.name}'</ModalSnippetName> snippet ?</ModalText>
             }
           </div>
           <ButtonsContainer>
