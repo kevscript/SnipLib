@@ -66,8 +66,4 @@ const mapStateToProps = state => ({
   snippets: state.snippets
 })
 
-const mapDispatchToProps = {
-
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Editor)
+export default connect(mapStateToProps, null)(Editor)
