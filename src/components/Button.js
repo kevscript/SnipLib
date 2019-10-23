@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components'
+import PropTypes from 'prop-types'
 
 const TheButton = styled.button`
   cursor: pointer;
@@ -28,4 +29,9 @@ const Button = ({children, handleOnClick}) => {
   )
 }
 
-export default Button;
+Button.propTypes = {
+  children: PropTypes.string.isRequired,
+  handleOnClick: PropTypes.func.isRequired
+}
+
+export default Button
