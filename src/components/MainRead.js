@@ -1,13 +1,13 @@
 import React from 'react'
 import styled from 'styled-components'
-import ReactTooltip from 'react-tooltip'
 import { connect } from 'react-redux'
 
-import { setEditMode, openConfirmDeleteSnippetModal } from '../actions'
-
+import Editor from './Editor'
+import Icon from './Icon'
 import EditIcon from '../assets/editDark.svg'
 import DeleteIcon from '../assets/deleteDark.svg'
-import Editor from './Editor'
+
+import { setEditMode, openConfirmDeleteSnippetModal } from '../actions'
 
 const Container = styled.div`
   flex-grow: 1;
@@ -30,33 +30,10 @@ const ActionsContainer = styled.div`
   position: relative;
 `
 
-const IconContainer = styled.div`
-  cursor: pointer;
-  width: 15px;
-  height: 15px;
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  &:not(:last-child) {
-    margin-right: 15px;
-  }
-`
-
 const Title = styled.h3`
   font-size: 20px;
   font-weight: 500;
-`
-
-const Icon = styled.img`
-  display: block;
-  width: auto;
-  height: 100%;
-`
-
-const TooltipText = styled.span`
-  color: ${props => props.dark ? '#333' : 'inherit'};
+  margin: 0 15px 0 0;
 `
 
 const SubHeader = styled.div`
@@ -91,18 +68,20 @@ const MainRead = ({ data, openConfirmDeleteSnippetModal, setEditMode }) => {
       <Header>
         <Title>{name}</Title>
         <ActionsContainer>
-          <IconContainer onClick={setEditMode}>
-            <Icon src={EditIcon} data-tip data-for="editSnippet" />
-            <ReactTooltip id='editSnippet' type='dark' place='bottom'>
-              <TooltipText>Edit Snippet</TooltipText>
-            </ReactTooltip>
-          </IconContainer>
-          <IconContainer onClick={openConfirmDeleteSnippetModal}>
-            <Icon src={DeleteIcon} data-tip data-for="deleteSnippet" />
-            <ReactTooltip id='deleteSnippet' type='warning'>
-              <TooltipText dark>Delete Snippet</TooltipText>
-            </ReactTooltip>
-          </IconContainer>
+          <Icon
+            handleOnClick={setEditMode}
+            icon={EditIcon}
+            tip={true}
+            tipName="Edit Snippet"
+          />
+          <Icon
+            handleOnClick={openConfirmDeleteSnippetModal}
+            icon={DeleteIcon}
+            tip={true}
+            tipName="Delete Snippet"
+            tipType="warning"
+            tipTextColor="dark"
+          />
         </ActionsContainer>
       </Header>
       <div>

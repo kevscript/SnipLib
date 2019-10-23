@@ -5,12 +5,11 @@ import { connect } from 'react-redux'
 import firebase from 'firebase/app'
 import 'firebase/auth'
 
-import { openListModal, setSelectedList } from '../actions'
-import ReactTooltip from 'react-tooltip'
-
 import Button from './Button'
-
+import Icon from './Icon'
 import AddIcon from '../assets/addLight.svg'
+
+import { openListModal, setSelectedList } from '../actions'
 
 const Container = styled.div`
   min-height: 100vh;
@@ -37,9 +36,7 @@ const Title = styled.h3`
 `
 
 const ListsContainer = styled.div``
-
-const Lists = styled.ul`
-`
+const Lists = styled.ul``
 
 const Item = styled.li`
   cursor: pointer;
@@ -49,17 +46,6 @@ const Item = styled.li`
   margin: 2px 0;
   font-size: 16px;
 `
-
-const IconContainer = styled.div`
-  cursor: pointer;
-  width: 15px;
-  height: 15px;
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`
-
 const PhotoContainer = styled.div`
   position: relative;
   display: flex;
@@ -73,7 +59,7 @@ const PhotoContainer = styled.div`
   margin-right: 5px;
 `
 
-const Icon = styled.img`
+const Img = styled.img`
   display: block;
   width: auto;
   height: 100%;
@@ -122,7 +108,7 @@ const ListBar = ({ lists, user, openListModal, setSelectedList }) => {
       <Header>
         <Profile>
           <PhotoContainer>
-            <Icon src={userInfo.photoURL} alt="profile avatar"/>
+            <Img src={userInfo.photoURL} alt="profile avatar"/>
           </PhotoContainer>
           <ProfileName>{userInfo.displayName ? userInfo.displayName : 'noname'}</ProfileName>
         </Profile>
@@ -130,17 +116,19 @@ const ListBar = ({ lists, user, openListModal, setSelectedList }) => {
       </Header>
       <TitleBar>
         <Title>My Lists</Title>
-        <IconContainer onClick={handleOpenListModal}>
-          <Icon src={AddIcon} data-tip="Create List"/>
-          <ReactTooltip place="bottom" type="dark" effect="solid"/>
-        </IconContainer>
+        <Icon handleOnClick={handleOpenListModal} icon={AddIcon} tip={true} tipName="Create List" />
       </TitleBar>
       <ListsContainer>
         <Lists>
           {allLists.length > 0 && allLists.map(el => {
             return (
-              <Item key={el.createdAt} isSelected={el.selected} data-selected={el.selected}
-              data-id={el.createdAt} onClick={handleListSelection}>
+              <Item 
+                key={el.createdAt} 
+                isSelected={el.selected} 
+                data-selected={el.selected}
+                data-id={el.createdAt} 
+                onClick={handleListSelection}
+              >
                 {el.name}
               </Item>
             )
