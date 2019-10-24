@@ -21,16 +21,16 @@ const TheButton = styled.button`
   }
 `
 
-const Button = ({children, handleOnClick}) => {
+const Button = ({label, handleOnClick}) => {
   return (
     <TheButton onClick={handleOnClick}>
-      {children}
+      {label}
     </TheButton>
   )
 }
 
 Button.propTypes = {
-  children: PropTypes.string.isRequired,
+  label: PropTypes.string.isRequired,
   handleOnClick: PropTypes.func
 }
 
