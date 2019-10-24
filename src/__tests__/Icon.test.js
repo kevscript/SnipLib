@@ -7,12 +7,14 @@ describe('Icon component', () => {
 
   it('renders correctly with the required props', () => {
     const onClick = jest.fn()
-    const path = '/img.jpg'
+    const path = `${window.location.href}/assets/img.jpg`
     const { getByTestId } = render(<Icon handleOnClick={onClick} icon={path} />)
 
     fireEvent.click(getByTestId('container'))
 
     expect(onClick).toHaveBeenCalled()
+    expect(getByTestId('container')).toContainElement(getByTestId('img'))
+    expect(getByTestId('img')).toHaveProperty('src', path)
   })
 
 })
