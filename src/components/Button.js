@@ -21,7 +21,7 @@ const TheButton = styled.button`
   }
 `
 
-const Button = ({label, handleOnClick}) => {
+const Button = ({handleOnClick, label}) => {
   return (
     <TheButton onClick={handleOnClick}>
       {label}
@@ -31,7 +31,7 @@ const Button = ({label, handleOnClick}) => {
 
 Button.propTypes = {
   label: PropTypes.string.isRequired,
-  handleOnClick: PropTypes.func
+  handleOnClick: PropTypes.func.isRequired
 }
 
 export default Button
