@@ -101,8 +101,8 @@ const ConfirmModal = ({ type, snippets, lists, closeConfirmDeleteListModal, clos
             }
           </div>
           <ButtonsContainer>
-            <StyledButton handleOnClick={handleCancel}>Cancel</StyledButton>
-            <StyledButton handleOnClick={handleDelete}>Delete</StyledButton>
+            <StyledButton handleOnClick={handleCancel} label="Cancel" />
+            <StyledButton handleOnClick={handleDelete} label="Delete" />
           </ButtonsContainer>
         </ModalSection>
       </Modal>

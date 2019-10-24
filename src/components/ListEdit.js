@@ -74,8 +74,8 @@ const ListModal = ({ lists, closeListModal, changeListModalName, editList, reset
           placeholder="Enter a name for your list"
         />
         <ButtonsContainer>
-          <StyledButton handleOnClick={editList}>Edit</StyledButton>
-          <StyledButton handleOnClick={handleCancelation}>Cancel</StyledButton>
+          <StyledButton handleOnClick={editList} label="Edit" />
+          <StyledButton handleOnClick={handleCancelation} label="Cancel" />
         </ButtonsContainer>
       </ModalSection>
       { error && 

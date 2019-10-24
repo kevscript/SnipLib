@@ -119,8 +119,8 @@ const MainEdit = ({ selectedSnippet, snippets, lists, changeSnippetCode, changeS
           : <Title>{selectedSnippet ? selectedSnippet.name : 'Title'}</Title>
         }
         <ActionsContainer>
-          <StyledButton handleOnClick={handleCancel}>Cancel</StyledButton>
-          <StyledButton handleOnClick={handleAdd}>Save</StyledButton>
+          <StyledButton handleOnClick={handleCancel} label="Cancel" />
+          <StyledButton handleOnClick={handleAdd} label="Save" />
         </ActionsContainer>
       </Header>
       <div>

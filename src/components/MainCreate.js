@@ -112,8 +112,8 @@ const MainCreate = ({ snippets, lists, changeSnippetCode, changeSnippetName, cha
           : <Title>New Snippet</Title>
         }
         <ActionsContainer>
-          <StyledButton handleOnClick={handleCancel}>Cancel</StyledButton>
-          <StyledButton handleOnClick={handleAdd}>Save</StyledButton>
+          <StyledButton handleOnClick={handleCancel} label="Cancel" />
+          <StyledButton handleOnClick={handleAdd} label="Save" />
         </ActionsContainer>
       </Header>
       <div>
