@@ -38,8 +38,8 @@ const Icon = ({
   tipTextColor = "normal"
 }) => {
   return (
-    <IconContainer onClick={handleOnClick} data-testid="container">
-      <Img src={icon} data-tip data-for={tip ? tipName : ''} data-testid="img"/>
+    <IconContainer onClick={handleOnClick} data-testid="icon-container">
+      <Img src={icon} data-tip data-for={tip ? tipName : ''} data-testid="icon-img"/>
       { tip ? (
         <ReactTooltip id={tipName} type={tipType} place={tipPlace} effect={tipEffect}>
           <TooltipText color={tipTextColor} data-testid="text">{tipName}</TooltipText>

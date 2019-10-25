@@ -10,13 +10,13 @@ describe('Icon component', () => {
     const path = `${window.location.href}/assets/img.jpg`
     const { getByTestId } = render(<Icon handleOnClick={onClick} icon={path} />)
 
-    fireEvent.click(getByTestId('container'))
+    fireEvent.click(getByTestId('icon-container'))
 
     const tooltip = document.querySelector('[data-id="tooltip"]')
 
     expect(onClick).toHaveBeenCalled()
-    expect(getByTestId('container')).toContainElement(getByTestId('img'))
-    expect(getByTestId('img')).toHaveProperty('src', path)
+    expect(getByTestId('icon-container')).toContainElement(getByTestId('icon-img'))
+    expect(getByTestId('icon-img')).toHaveProperty('src', path)
     expect(tooltip).not.toBeInTheDocument()
   })
 
