@@ -81,7 +81,7 @@ const ProfileName = styled.span`
   font-weight: 500;
 `
 
-const ListBar = ({ lists, user, openListModal, setSelectedList }) => {
+export const ListBar = ({ lists, user, openListModal, setSelectedList }) => {
   const { allLists } = lists
   const { userInfo } = user
   const handleLogOut = () => {
@@ -108,18 +108,20 @@ const ListBar = ({ lists, user, openListModal, setSelectedList }) => {
       <Header>
         <Profile>
           <PhotoContainer>
-            <Img src={userInfo.photoURL} alt="profile avatar"/>
+            <Img src={userInfo.photoURL} alt="profile avatar" data-testid="user-avatar"/>
           </PhotoContainer>
-          <ProfileName>{userInfo.displayName ? userInfo.displayName : 'noname'}</ProfileName>
+          <ProfileName data-testid="user-name">
+            {userInfo.displayName ? userInfo.displayName : 'noname'}
+          </ProfileName>
         </Profile>
-        <Button handleOnClick={handleLogOut} label="Log out" />
+        <Button handleOnClick={handleLogOut} label="Log out" data-testid="log-button"/>
       </Header>
       <TitleBar>
         <Title>My Lists</Title>
         <Icon handleOnClick={handleOpenListModal} icon={AddIcon} tip={true} tipName="Create List" />
       </TitleBar>
       <ListsContainer>
-        <Lists>
+        <Lists data-testid="lists-container">
           {allLists.length > 0 && allLists.map(el => {
             return (
               <Item 
