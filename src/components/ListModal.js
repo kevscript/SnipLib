@@ -45,7 +45,7 @@ const Input = styled.input`
   border: 1px solid rgba(0,0,0,0.3);
 `
 
-const ListModal = ({ lists, closeListModal, changeListModalName, addNewList, resetListModalName }) => {
+export const ListModal = ({ lists, closeListModal, changeListModalName, addNewList, resetListModalName }) => {
   const { nameInput, error } = lists
 
   const handleCancelation = () => {
@@ -64,24 +64,25 @@ const ListModal = ({ lists, closeListModal, changeListModalName, addNewList, res
   return (
     <Modal>
       <ModalSection>
-        <Input 
+        <Input
           autoFocus={true}
-          onChange={(e) => changeListModalName(e.target.value)} 
+          onChange={(e) => changeListModalName(e.target.value)}
           onKeyUp={handleKeyUp}
           value={nameInput}
-          type="text" 
-          name="list-name" 
+          type="text"
+          name="list-name"
           placeholder="Enter a name for your list"
+          data-testid="list-modal-input"
         />
         <ButtonsContainer>
-          <StyledButton handleOnClick={addNewList} label="Create" />
-          <StyledButton handleOnClick={handleCancelation} label="Cancel" />
+          <StyledButton handleOnClick={addNewList} label="Create"/>
+          <StyledButton handleOnClick={handleCancelation} label="Cancel"/>
         </ButtonsContainer>
       </ModalSection>
-      { error && 
-          <ModalSection>
-            <span>{error}</span>
-          </ModalSection>
+      {error &&
+        <ModalSection>
+          <span data-testid="list-modal-error">{error}</span>
+        </ModalSection>
       }
     </Modal>
   )
