@@ -9,7 +9,7 @@ import 'firebase/auth'
 
 import { userExistsInDatabase } from '../config/fire'
 
-import ListsBar from './ListsBar'
+import ListBar from './ListBar'
 import Modal from './Modal'
 import SnipsBar from './SnipsBar'
 import Main from './Main'
@@ -65,7 +65,7 @@ const Home = ({ lists, user, snippets, handleUser, getData, pushDataError, initU
   if (userInfo) {
     return (
       <Container>
-        <ListsBar />
+        <ListBar />
         <SnipsBar />
         <Main />
         {modalOpen && <Modal />}
