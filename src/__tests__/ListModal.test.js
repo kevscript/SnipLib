@@ -60,8 +60,34 @@ describe('ListModal component', () => {
     })
 
     it('shouldnt render an error message', () => {
-      const err = document.querySelector('[data-id="list-modal-error"]')
-      expect(err).not.toBeInTheDocument()
+      const { queryByTestId } = component
+      expect(queryByTestId('list-modal-error')).not.toBeInTheDocument()
+    })
+
+  })
+
+  describe('when error', () => {
+
+    let component
+
+    let lists = {
+      nameInput: '',
+      error: 'input is empty'
+    }
+
+    const mockClose = jest.fn()
+    const mockAdd = jest.fn()
+    const mockChange = jest.fn()
+    const mockReset = jest.fn()
+
+    beforeEach(() => {
+      component = render(<ListModal lists={lists} closeListModal={mockClose} changeListModalName={mockChange} addNewList={mockAdd} resetListModalName={mockReset} />)
+
+    })
+
+    it('should show an error message', () => {
+      const { queryByTestId } = component
+      expect(queryByTestId('list-modal-error')).toBeInTheDocument()
     })
 
   })
