@@ -39,7 +39,7 @@ const Main = ({ snippets }) => {
   if (viewMode === 'read') {
     return (
       <Container>
-        <MainRead data={selectedSnippet} />
+        <MainRead selectedSnippet={selectedSnippet} />
       </Container>
     )
   }

@@ -12,7 +12,6 @@ import {
   setSelectedSnippet,
   setEditList,
   openConfirmDeleteListModal,
-  setSelectedList
 } from '../actions'
 
 const Container = styled.div`
@@ -42,8 +41,6 @@ const Title = styled.h3`
   font-size: 16px;
   font-weight: 500;
 `
-
-const SnipsContainer = styled.ul``
 
 const TitleContainer = styled.div`
   display: flex;
@@ -75,7 +72,7 @@ const Hint = styled.p`
 `
 
 
-const SnipsBar = ({ lists, snippets, setViewMode, deleteList, setSelectedSnippet, setSelectedList, setEditList, openConfirmDeleteListModal }) => {
+const SnipsBar = ({ lists, snippets, setViewMode, setSelectedSnippet, setEditList, openConfirmDeleteListModal }) => {
 
   const { allLists } = lists
   let selectedList = allLists.find(x => x.selected === true)
@@ -100,7 +97,7 @@ const SnipsBar = ({ lists, snippets, setViewMode, deleteList, setSelectedSnippet
   if (allLists.length === 0) {
     return (
       <Container>
-        <Hint>Create a List to start adding snippets :)</Hint>
+        <Hint>Create a List to start adding snippets.</Hint>
       </Container>
     )
   }
@@ -108,7 +105,7 @@ const SnipsBar = ({ lists, snippets, setViewMode, deleteList, setSelectedSnippet
   if (!selectedList) {
     return (
       <Container>
-        <Hint>Select a List or create a new one :)</Hint>
+        <Hint>Select a List or create a new one.</Hint>
       </Container>
     )
   }
@@ -151,7 +148,7 @@ const SnipsBar = ({ lists, snippets, setViewMode, deleteList, setSelectedSnippet
           }
         </ActionsContainer>
       </Header>
-      <SnipsContainer>
+      <ul>
         {
           allSnippets.filter(x => x.parentId === selectedList.createdAt).length > 0
 
@@ -173,7 +170,7 @@ const SnipsBar = ({ lists, snippets, setViewMode, deleteList, setSelectedSnippet
               <Hint>Your list is empty, time to add some snippets.</Hint>
             </Container>
         }
-      </SnipsContainer>
+      </ul>
     </Container>
   )
 }
@@ -188,7 +185,6 @@ const mapDispatchToProps = {
   openConfirmDeleteListModal,
   setSelectedSnippet,
   setEditList,
-  setSelectedList
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SnipsBar)

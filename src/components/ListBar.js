@@ -84,6 +84,7 @@ const ProfileName = styled.span`
 export const ListBar = ({ lists, user, openListModal, setSelectedList }) => {
   const { allLists } = lists
   const { userInfo } = user
+
   const handleLogOut = () => {
     firebase.auth().signOut()
       .then(() => {
@@ -99,10 +100,6 @@ export const ListBar = ({ lists, user, openListModal, setSelectedList }) => {
     }
   }
 
-  const handleOpenListModal = () => {
-    openListModal()
-  }
-
   return (
     <Container>
       <Header>
@@ -116,9 +113,10 @@ export const ListBar = ({ lists, user, openListModal, setSelectedList }) => {
         </Profile>
         <Button handleOnClick={handleLogOut} label="Log out" data-testid="log-button"/>
       </Header>
+      
       <TitleBar>
         <Title>My Lists</Title>
-        <Icon handleOnClick={handleOpenListModal} icon={AddIcon} tip={true} tipName="Create List" />
+        <Icon handleOnClick={openListModal} icon={AddIcon} tip={true} tipName="Create List" />
       </TitleBar>
       <ListsContainer>
         <Lists data-testid="lists-container">

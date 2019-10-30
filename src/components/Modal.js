@@ -36,7 +36,6 @@ const Modal = ({ lists }) => {
   }
 }
 
-
 const mapStateToProps = state => ({
   lists: state.lists
 })

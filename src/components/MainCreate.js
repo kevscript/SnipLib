@@ -80,28 +80,11 @@ const MainCreate = ({ snippets, lists, changeSnippetCode, changeSnippetName, cha
   const { allLists } = lists
   const { codeInput, nameInput, error, allLanguages, languageInput } = snippets
 
-  const options = {
-    theme: 'material',
-    lineNumbers: true
-  }
-
-  const handleAdd = () => {
-    addNewSnippet()
-  }
+  const options = { theme: 'material', lineNumbers: true }
 
   const handleCancel = () => {
     setViewMode('read')
     resetSnippetInputs()
-  }
-
-  const handleListSelect = (e) => {
-    const value = e.target.value
-    changeSnippetList(value)
-  }
-
-  const handleLangSelect = (e) => {
-    const value = e.target.value
-    changeSnippetLanguage(value)
   }
 
   return (
@@ -113,37 +96,44 @@ const MainCreate = ({ snippets, lists, changeSnippetCode, changeSnippetName, cha
         }
         <ActionsContainer>
           <StyledButton handleOnClick={handleCancel} label="Cancel" />
-          <StyledButton handleOnClick={handleAdd} label="Save" />
+          <StyledButton handleOnClick={addNewSnippet} label="Save" />
         </ActionsContainer>
       </Header>
+
       <div>
-
         <SubHeader>
-
           {
             allLanguages &&
-            <Select onChange={handleLangSelect}>
+            <Select onChange={e => changeSnippetLanguage(e.target.value)}>
               <option value="">Select language</option>
               {allLanguages.map(x => <option key={`lang-${x}`} value={x}>{x}</option>)}
             </Select>
           }
 
-          <Input type="text" onChange={e => changeSnippetName(e.target.value)} placeholder="Enter a title for this snippet" value={nameInput} />
+          <Input 
+            type="text" 
+            onChange={e => changeSnippetName(e.target.value)} 
+            placeholder="Enter a title for this snippet" 
+            value={nameInput} 
+          />
 
           {
             allLists &&
-            <Select onChange={handleListSelect}>
+            <Select onChange={e => changeSnippetList(e.target.value)}>
               <option value="">Select list</option>
               {allLists.map(x => <option key={x.createdAt} value={x.createdAt}>{x.name}</option>)}
             </Select>
           }
-
         </SubHeader>
 
         <EditorContainer>
-          <Editor handleChange={changeSnippetCode} value={codeInput} options={options} lang={languageInput}/>
+          <Editor 
+            handleChange={changeSnippetCode} 
+            value={codeInput} 
+            options={options} 
+            lang={languageInput}
+          />
         </EditorContainer>
-
       </div>
     </Container>
   )

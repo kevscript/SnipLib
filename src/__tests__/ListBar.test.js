@@ -52,5 +52,5 @@ describe('ListsBar component', () => {
     expect(getByTestId('user-avatar')).toHaveProperty('src', user.userInfo.photoURL)
     expect(getByTestId('user-name')).toHaveTextContent(user.userInfo.displayName)
   })
-
+  
 })

@@ -54,14 +54,10 @@ const EditorContainer = styled.div`
   margin: 25px;
 `
 
-const MainRead = ({ data, openConfirmDeleteSnippetModal, setEditMode }) => {
-  const { name, language, code } = data
-
-  const options = {
-    theme: 'material',
-    lineNumbers: true,
-    readOnly: true
-  }
+const MainRead = ({ selectedSnippet, openConfirmDeleteSnippetModal, setEditMode }) => {
+  
+  const { name, language, code } = selectedSnippet
+  const options = { theme: 'material', lineNumbers: true, readOnly: true }
 
   return (
     <Container>
