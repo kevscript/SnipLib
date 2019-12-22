@@ -97,6 +97,7 @@ export const getData = () => {
     const userId = getState().user.userInfo.uid
 
     firebase.database().ref('users/' + userId).once("value", snap => {
+      // values should be an array of values
       const values = snap.val()
       dispatch(getDataSuccess(values))
       // sets the UI logic based on data

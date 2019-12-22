@@ -29,7 +29,7 @@ export default (state = initialState, action) => {
     case PUSH_DATA_SUCCESS:
       return {
         ...state,
-        loading: true
+        loading: false
       }
 
     case PUSH_DATA_ERROR:

@@ -36,7 +36,7 @@ export default (state = initialState, action) => {
     case GET_DATA_SUCCESS:
       return {
         ...state,
-        allSnippets: action.payload.snippets ? action.payload.snippets : []
+        allSnippets: action.payload.snippets ? [...action.payload.snippets] : []
       }
 
     case SET_VIEW_MODE:
