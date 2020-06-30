@@ -68,7 +68,11 @@ export const pushData = () => {
     const snippets = getState().snippets.allSnippets
     const userId = getState().user.userInfo.uid
 
-    firebase.database().ref('users/' + userId).set({lists, snippets})
+    firebase.database().ref('users/' + userId)
+      .set({
+        lists : [...lists], 
+        snippets : [...snippets]
+      })
       .then(() => {
         firebase.database().ref('users/' + userId).once('value', () => {
           dispatch(pushDataSuccess())

@@ -1,18 +1,18 @@
-import React from 'react'
-import styled from 'styled-components'
-import { connect } from 'react-redux'
+import React from "react";
+import styled from "styled-components";
+import { connect } from "react-redux";
 
-import Editor from './Editor'
-import Icon from './Icon'
-import EditIcon from '../assets/editDark.svg'
-import DeleteIcon from '../assets/deleteDark.svg'
+import Editor from "./Editor";
+import Icon from "./Icon";
+import EditIcon from "../assets/editDark.svg";
+import DeleteIcon from "../assets/deleteDark.svg";
 
-import { setEditMode, openConfirmDeleteSnippetModal } from '../actions'
+import { setEditMode, openConfirmDeleteSnippetModal } from "../actions";
 
 const Container = styled.div`
   flex-grow: 1;
   min-height: 100vh;
-`
+`;
 
 const Header = styled.div`
   margin: 0 25px;
@@ -21,43 +21,46 @@ const Header = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 25px 0;
-  border-bottom: 1px solid rgba(0,0,0,0.1);
-`
+  padding: 15px 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+`;
 
 const ActionsContainer = styled.div`
   display: flex;
   position: relative;
-`
+`;
 
 const Title = styled.h3`
   font-size: 20px;
   font-weight: 500;
   margin: 0 15px 0 0;
-`
+`;
 
 const SubHeader = styled.div`
   display: flex;
   flex-grow: 1;
   margin: 0 25px;
   align-items: center;
-  padding: 15px 0;
-`
+  height: 50px;
+`;
 
 const SubTitle = styled.h4`
   font-size: 16px;
   font-weight: 500;
   margin-left: 15px;
-`
+`;
 
 const EditorContainer = styled.div`
   margin: 25px;
-`
+`;
 
-const MainRead = ({ selectedSnippet, openConfirmDeleteSnippetModal, setEditMode }) => {
-  
-  const { name, language, code } = selectedSnippet
-  const options = { theme: 'material', lineNumbers: true, readOnly: true }
+const MainRead = ({
+  selectedSnippet,
+  openConfirmDeleteSnippetModal,
+  setEditMode,
+}) => {
+  const { name, language, code } = selectedSnippet;
+  const options = { theme: "material", lineNumbers: true, readOnly: true };
 
   return (
     <Container>
@@ -90,12 +93,12 @@ const MainRead = ({ selectedSnippet, openConfirmDeleteSnippetModal, setEditMode 
         </EditorContainer>
       </div>
     </Container>
-  )
-}
+  );
+};
 
 const mapDispatchToProps = {
   openConfirmDeleteSnippetModal,
-  setEditMode
-}
+  setEditMode,
+};
 
-export default connect(null, mapDispatchToProps)(MainRead)
+export default connect(null, mapDispatchToProps)(MainRead);

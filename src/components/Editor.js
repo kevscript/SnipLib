@@ -1,21 +1,25 @@
-import React from 'react'
-import styled from 'styled-components'
-import { connect } from 'react-redux'
-import { Controlled as CodeMirror } from 'react-codemirror2';
-import 'codemirror/lib/codemirror.css';
-import 'codemirror/theme/material.css';
-require('codemirror/mode/xml/xml');
-require('codemirror/mode/css/css');
-require('codemirror/mode/javascript/javascript')
-require('codemirror/mode/markdown/markdown')
-require('codemirror/mode/php/php')
-require('codemirror/mode/python/python')
-require('codemirror/mode/ruby/ruby')
-require('codemirror/mode/clike/clike')
+import React from "react";
+import styled from "styled-components";
+import { connect } from "react-redux";
+import { Controlled as CodeMirror } from "react-codemirror2";
+import "codemirror/lib/codemirror.css";
+import "codemirror/theme/material.css";
+import "../styles/codemirror.css";
+require("codemirror/mode/xml/xml");
+require("codemirror/mode/css/css");
+require("codemirror/mode/javascript/javascript");
+require("codemirror/mode/markdown/markdown");
+require("codemirror/mode/php/php");
+require("codemirror/mode/python/python");
+require("codemirror/mode/ruby/ruby");
+require("codemirror/mode/clike/clike");
 
 const Container = styled.div`
   position: relative;
-`
+  width: 100%;
+  display: flex;
+  height: calc(100vh - 180px);
+`;
 
 const Button = styled.button`
   position: absolute;
@@ -29,41 +33,46 @@ const Button = styled.button`
   padding: 3px 5px;
   color: #fff;
   font-weight: 600;
-  
+
   &:active {
     background: #f4f4f4;
     color: #00adb5;
   }
-`
+`;
 
 const StyledMirror = styled(CodeMirror)`
   width: 100%;
-`
+`;
 
-const Editor = ({ handleChange, value = 'write code here', options, lang, snippets }) => {
-
-  const { viewMode } = snippets
+const Editor = ({
+  handleChange,
+  value = "write code here",
+  options,
+  lang,
+  snippets,
+}) => {
+  const { viewMode } = snippets;
 
   const handleCopy = () => {
-    navigator.clipboard.writeText(value)
-  }
+    navigator.clipboard.writeText(value);
+  };
 
   return (
-    <Container>
+    <Container data-id="kjfhkjdhfksdjhfksjdfhksjfnksjfnk">
       <StyledMirror
         value={value}
         options={{ ...options, mode: lang }}
         onBeforeChange={(editor, data, val) => {
-          handleChange(val)
+          handleChange(val);
         }}
       />
-      { viewMode === 'read' && <Button onClick={handleCopy}>copy</Button> }
+      {viewMode === "read" && <Button onClick={handleCopy}>copy</Button>}
     </Container>
-  )
-}
+  );
+};
 
-const mapStateToProps = state => ({
-  snippets: state.snippets
-})
+const mapStateToProps = (state) => ({
+  snippets: state.snippets,
+});
 
-export default connect(mapStateToProps, null)(Editor)
+export default connect(mapStateToProps, null)(Editor);
