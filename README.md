@@ -1,13 +1,19 @@
 ## 1. About
 
-SnipLib is an online dashboard app that allows you to create your own snippet library.
+SnipLib is an online dashboard app that allows you to create your own library of snippets.
+Users are able to create code snippets in different languages, store and edit them.
 
-The authentification flow is handled by Firebase and the data stored in their Realtime Database.
+<br /> <br />
+
+![image of sniplib app](./images/sniplib-laptop.png)
+
+<br /> <br />
 
 ## 2. Tech Stack
 
 - React
 - Redux (+ redux-thunk)
+- Firebase (Auth + Realtime DB)
 - styled-components
 
 ## 3. Installation
